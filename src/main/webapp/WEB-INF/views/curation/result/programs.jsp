@@ -342,7 +342,7 @@ $(document).on("click", "#orderModal button", function (e) {
 
 					<div class="button-set">
 						<button class="button-basic border bottle prefix"
-							onclick="location.href='/customer/product/result/products.do?singleYn=Y'">
+							onclick="location.href='result/products?singleYn=Y'">
 							<i class="ico"></i> 내게 맞는 상품 추천
 						</button>
 

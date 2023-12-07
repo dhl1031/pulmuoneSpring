@@ -19,10 +19,15 @@
    
 	<!-- 큐레이션 결과 */* -->
    <definition name="curation/*/*.tiles" extends="base">
-      <put-attribute name="main" value="/WEB-INF/views/curation/{1}/{2}.jsp" /> 
-      
+      <put-attribute name="main" value="/WEB-INF/views/curation/{1}/{2}.jsp" />     
    </definition>
    
+   <!-- 큐레이션 모달창 -->
+   <definition name="*/*.modal"  template="/WEB-INF/views/curation/result/modalview.jsp">
+      <put-attribute name="modal" value="/WEB-INF/views/curation/{1}/{2}.jsp" />     
+   </definition>
+
+
    <!-- forum/ -->
    <definition name="forum/*/*.tiles" template="/WEB-INF/views/layouts/forum/layouts.jsp">
    		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />

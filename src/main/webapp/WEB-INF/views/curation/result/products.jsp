@@ -333,7 +333,7 @@ $(document).on("click", "#orderModal button", function (e) {
 					<div class="button-set">
 
 						<button class="button-basic border bottles prefix"
-							onclick="location.href='/customer/product/result/programs.do?singleYn=N'">
+							onclick="location.href='result/programs?${num}'">
 							<i class="ico"></i> <i class="ico"></i> 내게 맞는 프로그램 추천
 						</button>
 

@@ -41,10 +41,11 @@ public class CurationResultController {
 	
 	// 큐레이션 결과- 프로그램
 	@RequestMapping("/result/programs")
-	public String programs(@RequestParam(value = "program_no") int program_no, Model model) throws ClassNotFoundException, SQLException {
+	public String programs(CurationVO vo,  @RequestParam(value = "num") String num, Model model) throws ClassNotFoundException, SQLException {
 		log.info("> Programs Start");
+		vo.setProgram_no(Integer.parseInt(num));
 		
-		List<CurationVO> list = this.curationMapper.selectPG(program_no);
+		List<CurationVO> list = this.curationMapper.selectPG(vo);
 		model.addAttribute("list", list);
 		return "curation/result/programs.tiles";
 	}

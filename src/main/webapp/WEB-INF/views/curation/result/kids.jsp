@@ -407,35 +407,38 @@
 			<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
 				<div class="modal-content modal-product">
 
+
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close"></button>
 						<div class="thumb-normal">
-							<c:forEach var="dto" items="${list2 }">
-								<img src="/file/download/product/${dto.system_name }">
+							<c:forEach var="list2" items="${list2 }">
+								<img src="/file/download/product/${list2.system_name }">
 							</c:forEach>
 						</div>
 					</div>
 
-					<c:forEach var="dto" items="${list2}">
+					<c:forEach var="list2" items="${list2}">
 						<div class="modal-body">
 							<div class="info-area">
-								<h2>${dto.products_name }</h2>
-								<p>${dto.products_sub_name}</p>
+								<h2>${list2.products_name }</h2>
+								<p>${list2.products_sub_name}</p>
 								<div class="product-addiction" style="border-bottom: none">
 									<div class="price-item">
-										<p>${dto.price}<span>원</span>
+										<p>${list2.price}<span>원</span>
 										</p>
-										<span>(${dto.products_size })</span>
+										<span>(${list2.products_size })</span>
 									</div>
 								</div>
 							</div>
 							<div class="button-set">
-								<a href="/product/daily/${dto.products_tag }"
+								<a href="/product/daily/${list2.products_tag }"
 									class="button-basic primary">상세보기</a>
 							</div>
 						</div>
 					</c:forEach>
+					
+					
 				</div>
 			</div>
 		</div>

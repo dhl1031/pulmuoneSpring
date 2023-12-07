@@ -111,11 +111,11 @@
 				const req3 = JSON.parse(sessionStorage.getItem('req3'))
 
 					if (singleYn=='Y') {
-						location.href='result/products' +  '?singleYn=' + singleYn ;
+						location.href='result/products'  + '?singleYn=' + singleYn ;
 					}	else { 
-						location.href="result/programs" + '?singleYn=' + singleYn ;
+						location.href="result/programs"  + '?singleYn=' + singleYn ;
 					}
-
+				
 				const data = {...req1, ...req2, ...req3}
 				const body = Object.entries(data).filter(v => !!parseInt(v[0])).map(
 						v => ({idx: v[0], answer: v[1]}));
@@ -129,10 +129,20 @@
 					location.href +=  data.RESULT_MSG.execution.idx
 					+ '&bmi=' + bmi + '&questions='
 					+ data.RESULT_MSG.questions.join(',');
+					
+				
+
+// 					if (singleYn=='Y') {
+// 						location.href='result/products?' + data.RESULT_MSG.execution.idx + '?singleYn=' + singleYn + '&bmi=' + bmi + '&questions'	+ data.RESULT_MSG.questions.join(',');
+// 					}	else { 
+// 						location.href="result/programs?" + data.RESULT_MSG.execution.idx +'?singleYn=' + singleYn+ '&bmi=' + bmi + '&questions'	+ data.RESULT_MSG.questions.join(',');;
+// 					}
+					
 // 					location.href = '/customer/product/result/products.do' + data.RESULT_MSG.execution.idx
 // 					+ '?singleYn=' + singleYn + '&bmi=' + bmi + '&questions='
 // 					+ data.RESULT_MSG.questions.join(',');
 			})
+			
 
 	}
             if (currentPage <= totalCnt) {

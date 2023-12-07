@@ -17,7 +17,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/product/preview/*")
+@RequestMapping("/product/*")
 public class CurationModalController {
 
 //	/product/preview/modalview.do = servlets.curation.command.ModalView
@@ -26,13 +26,21 @@ public class CurationModalController {
 	private CurationMapper curationMapper;
 
 	//모달창
-	@RequestMapping("modalview")
-	public String modals(@RequestParam(value = "products_tag") int products_tag, Model model) throws ClassNotFoundException, SQLException {
-		log.info("> Modal Start");
+	@RequestMapping("/preview/modalview")
+	public String modals(
+			KidsVO vo
+			 , @RequestParam(value = "num") String num
+//			, @RequestParam(value = "origin_name") String filed
+//			, @RequestParam(value = "View") String query
+			, Model model) throws ClassNotFoundException, SQLException {
+		log.info("> Modal Start " );
+		vo.setProducts_tag(Integer.parseInt(num));
 		
-		List<KidsVO> list2 = this.curationMapper.select(products_tag);
+//		vo.setOrigin_name(filed);
+//		vo.setOrigin_name(query);
+		List<KidsVO> list2 = this.curationMapper.select(vo);
 		model.addAttribute("list2",list2);
-		return "curation/result/modalview.tiles";
+		return "result/modalview.modal";
 	}
 	
 
