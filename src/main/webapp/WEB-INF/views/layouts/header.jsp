@@ -34,7 +34,7 @@
                   <a href="/product/box/boxlist">택배배송</a>
                </li>
                <li>
-                  <a href="/customer/product/product">맞춤큐레이션</a>
+                  <a href="/customer/product">맞춤큐레이션</a>
                </li>
                <li>
                   <a href="/taste/taste">시음선물</a>
@@ -215,7 +215,7 @@
          <div class="sub-link">
             <div>
                <b>맞춤큐레이션</b>
-               <a href="/customer/product/product" title="해당 페이지로 가기">간단한 질문에 답하면 고객 맞춤 상품을 추천드려요
+               <a href="/customer/product" title="해당 페이지로 가기">간단한 질문에 답하면 고객 맞춤 상품을 추천드려요
                   <i class="ico ico-arr-right6"></i>
                </a>
             </div>

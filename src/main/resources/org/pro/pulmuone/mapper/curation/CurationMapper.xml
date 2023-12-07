@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pro.pulmuone.mapper.curation.CurationMapper">
+	
+<!-- 	키즈 프로그램 -->
+	<select id="selectList" resultType="org.pro.pulmuone.domain.curation.KidsVO">
+		SELECT kids_product_no, program_no, pi.img_no, program_name, dayweek, pi.products_no, p.products_name, program_content, 
+		products_tag, system_name, price, products_size, products_sub_name, origin_name 
+		FROM kids_product k JOIN products_img pi ON k.products_no = pi.products_no 
+		JOIN products p ON p.products_name = k.products_name 
+		WHERE origin_name not like 'View%' 
+		ORDER BY kids_product_no
+	</select>
+	
+<!-- 	모달창 -->
+	<select id="select" resultType="org.pro.pulmuone.domain.curation.KidsVO">
+		SELECT products_tag,  products_name, img_no, system_name, price, products_size, products_sub_name 
+		FROM  products_img pi JOIN products p ON p.products_no = pi.products_no 
+		WHERE products_tag = #{products_tag}  
+		AND 
+		origin_name like 'View%'  
+		ORDER BY img_no asc
+	</select>
+	
+<!-- 	큐레이션 결과-상품 -->
+	<select id="selectPD" resultType="org.pro.pulmuone.domain.curation.CurationVO">
+		SELECT curation_no, program_no,program_name, pi.img_no, dayweek, pi.products_no, p.products_name, program_content, products_tag, 
+		system_name, price, products_size, products_sub_name,  lifestyle_change01, lifestyle_change02, lifestyle_change03 
+		FROM curation_result c JOIN products_img pi ON c.img_no = pi.img_no 
+		JOIN products p ON c.products_no = p.products_no 
+		WHERE dayweek is null
+		AND 
+		program_no = #{program_no} 
+		ORDER BY curation_no
+	</select>
+	
+<!-- 	큐레이션 결과-프로그램 -->
+	<select id="selectPG" resultType="org.pro.pulmuone.domain.curation.CurationVO">
+		SELECT curation_no, program_no, program_name, pi.img_no, dayweek, pi.products_no, p.products_name, program_content, products_tag, 
+		system_name, price, products_size, products_sub_name,  lifestyle_change01, lifestyle_change02, lifestyle_change03 
+		FROM curation_result c JOIN products_img pi ON c.img_no = pi.img_no 
+		JOIN products p ON c.products_no = p.products_no 
+		WHERE dayweek is not null 
+		and 
+		program_no = #{program_no} 
+		ORDER BY curation_no
+	</select>
+	
+<!-- 	장바구니 추가-데일리 -->
+	<insert id="dailyadd">
+		insert into cart_daily (cart_no, member_no, products_no, mon_cnt, tue_cnt, wed_cnt, thu_cnt, fir_cnt, reg_date) 
+		values( #{cart_no}, #{member_no }, #{product_no}, #{mon_cnt} , #{tue_cnt}, #{wed_cnt}, #{thu_cnt}, #{fir_cnt}, sysdate)
+	</insert>
+
+</mapper>
