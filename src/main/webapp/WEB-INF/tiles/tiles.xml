@@ -9,23 +9,25 @@
    		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />
    		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
    		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
-   </definition>
-   
+    </definition>
+  <!--  메인 화면 -->
+    <definition name="home.*" extends="base">
+		<put-attribute name="main" value="/WEB-INF/views/{1}.jsp"/>	
+	</definition>
    <!-- */* -->
-   <definition name="*/*.tiles" extends="base">
-      <put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp" /> 
+    <definition name="*/*.tiles" extends="base">
+        <put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp" /> 
       
-   </definition>
+    </definition>
    
    <!-- forum/ -->
-   <definition name="forum/*/*.tiles" template="/WEB-INF/views/layouts/forum/layouts.jsp">
+    <definition name="forum/*/*.tiles" template="/WEB-INF/views/layouts/forum/layouts.jsp">
    		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />
    		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
    		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
 	    <put-attribute name="aside" value="/WEB-INF/views/layouts/forum/aside.jsp" /> 
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />    
-   </definition>
-
+    </definition>	
      
     
     <!-- customer.notice -->  
