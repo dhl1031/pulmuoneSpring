@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<body>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".visual-area").fddCarousel({
@@ -78,7 +79,6 @@
 							src="/file/download/banner/cf57865c-d559-4193-bce1-075b28c60a61.png"
 							alt="">
 						</a>
-
 					</div>
 				</div>
 				<!--E: 메인 비주얼-->
@@ -650,5 +650,4 @@
 					</div>
 				</div>
 			</div>
-</body>
 </html>

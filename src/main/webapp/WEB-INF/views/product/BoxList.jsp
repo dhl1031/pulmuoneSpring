@@ -1,12 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ include file="/WEB-INF/views/layouts/head.jsp"%>
-<body>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 	<script type="text/javascript">
-		var category = "${param.category}";
+		var category_no = "${param.category}";
 		$(document).on(
 				"click",
 				".tag-btn",
@@ -56,8 +54,6 @@
 			});
 		});
 	</script>
-	<div class="wrapper">
-<%-- 		<%@ include file="/WEB-INF/views/layouts/header.jsp"%> --%>
 		<main class="page-boxlist">
 			<div id="container-wrapper" class="container-wrapper">
 				<!--S: 메인 비주얼-->
@@ -120,7 +116,7 @@
 											<div class="owl-item active" style="width: 308.5px;">
 												<div class="prd-area">
 													<a
-														href="/product/box/view.do?tag=${dto.products_tag }&eventIdx="
+														href="/product/box/${dto.products_tag }?eventIdx="
 														title="제품 상세페이지로 가기">
 														<div class="badges">
 															<c:choose>
@@ -233,7 +229,7 @@
 				</div>
 				<form id="searchForm">
 					<input type="hidden" name="category_no" value="${param.category}">
-					<input type="hidden" name="tag" value="${param.tags }">
+					<input type="hidden" name="tags" value="${param.tags }">
 					<div class="cbody-wrap">
 						<div class="bg-light-gray over-section"
 							style="margin-bottom: 120px">
@@ -320,7 +316,8 @@
 											총 <em>${fn:length(searchcountlist) }</em>건의 상품이 있습니다.
 										</c:when>
 												<c:otherwise>
-											총 <em>${fn:length(list) }</em>건의 상품이 있습니다.
+<%-- 											총 <em>${fn:length(list) }</em>건의 상품이 있습니다. --%>
+											총 <em>${fn:length(searchcountlist) }</em>건의 상품이 있습니다.
 										</c:otherwise>
 											</c:choose>
 										</p>
@@ -330,7 +327,7 @@
 										<c:forEach var="dto" items="${searchlist }">
 											<div class="prd-area">
 												<a
-													href="/product/box/view.do?tag=${dto.products_tag }&eventIdx="
+													href="/product/box/${dto.products_tag }?eventIdx="
 													title="제품 상세페이지로 가기">
 													<div class="badges">
 														<c:choose>
@@ -448,10 +445,4 @@
 				</form>
 			</div>
 		</main>		
-<%-- 		<%@ include file="/WEB-INF/views/layouts/footer.jsp"%> --%>
-<%-- 		<%@ include file="/WEB-INF/views/ui/footermodal.jsp"%> --%>
-<%-- 		<%@ include file="/WEB-INF/views/ui/wishmodal.jsp"%> --%>
-<%-- 		<%@ include file="/WEB-INF/views/ui/cartmodal.jsp"%> --%>
-	</div>
-</body>
 </html>

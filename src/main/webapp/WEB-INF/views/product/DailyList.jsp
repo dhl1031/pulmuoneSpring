@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<body>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 	<script type="text/javascript">
 		var category_no = "${param.category}";
 		$(document).on(
@@ -72,7 +71,7 @@
 						</button>
 					</div>
 					<div class="vis-list" data-carousel="items">
-						<a class="item" href="/product/daily/view.do?tag=732"
+						<a class="item" href="/product/daily/732?eventIdx="
 							title="제품 상세페이지로 가기" style="background-color: #111111"> <img
 							src="/file/download/banner/84c3f8d0-5ae5-462b-9fea-cac7bc1d34fd.png"
 							alt="">
@@ -82,16 +81,16 @@
 							src="/file/download/banner/35b19bec-324b-41d6-812d-cdf8f00eb6cb.png"
 							alt="">
 						</a> <a class="item"
-							href="/product/daily/dailylist.do?category=&amp;tags=478"
+							href="/product/daily?category=&amp;tags=478?eventIdx="
 							title="제품 상세페이지로 가기" style="background-color: #ffffff"> <img
 							src="/file/download/banner/67c0a15e-a321-4513-8015-a973651fb8e8.png"
 							alt="">
 						</a> <a class="item" target="_blank"
-							href="/product/daily/view.do?tag=315" title="제품 상세페이지로 가기"
+							href="/product/daily/315?eventIdx=" title="제품 상세페이지로 가기"
 							style="background-color: #111111"> <img
 							src="/file/download/banner/6c036b45-96cf-4189-812a-82f2b36f7bcb.png"
 							alt="">
-						</a> <a class="item" href="/product/daily/view.do?tag=430"
+						</a> <a class="item" href="/product/daily/430?eventIdx="
 							title="제품 상세페이지로 가기" style="background-color: #f7f0d6"> <img
 							src="/file/download/banner/2b301cd0-0431-47b6-ab77-9c180e55ef96.png"
 							alt="">
@@ -103,7 +102,7 @@
 					<div class="container">
 						<ul>
 							<li><a>홈</a></li>
-							<li><a href="/product/daily/dailylist.do" class="active">
+							<li><a href="/product/daily" class="active">
 									매일배송 </a></li>
 						</ul>
 					</div>
@@ -119,9 +118,7 @@
 										<c:forEach items="${bestlist }" var="dto" varStatus="status">
 											<div class="owl-item active" style="width: 308.5px;">
 												<div class="prd-area">
-													<a
-														href="/product/daily/view.do?tag=${dto.products_tag }&eventIdx="
-														title="제품 상세페이지로 가기">
+													<a href="/product/daily/${dto.products_tag }?eventIdx="	title="제품 상세페이지로 가기">
 														<div class="badges">
 															<c:choose>
 																<c:when
@@ -319,13 +316,14 @@
 										<p class="count">
 											<c:choose>
 												<c:when test="${param.tags ne null and param.tags > '0' }">
-											총 <em>${fn:length(searchcountlist) }</em>건의 상품이 있습니다.
+											총 <em>${fn:length(searchcountlist) }</em>건의 상품이 있습니다.											
 										</c:when>
 												<c:when test="${param.category ne null }">										
-											총 <em>${fn:length(searchcountlist) }</em>건의 상품이 있습니다.
+											총 <em>${fn:length(searchcountlist) }</em>건의 상품이 있습니다.										
 										</c:when>
 												<c:otherwise>
-											총 <em>${fn:length(list) }</em>건의 상품이 있습니다.
+<%-- 											총 <em>${fn:length(list) }</em>건의 상품이 있습니다. --%>
+											총 <em>${fn:length(searchcountlist) }</em>건의 상품이 있습니다.
 										</c:otherwise>
 											</c:choose>
 										</p>
@@ -334,9 +332,7 @@
 										id="product-items">
 										<c:forEach items="${searchlist }" var="dto" varStatus="status">
 											<div class="prd-area">
-												<a
-													href="/product/daily/view.do?tag=${dto.products_tag }&eventIdx="
-													title="제품 상세페이지로 가기">
+												<a href="/product/daily/${dto.products_tag }?eventIdx=" title="제품 상세페이지로 가기">
 													<div class="badges">
 														<c:choose>
 															<c:when test="${dto.event_tag eq 'BEST' }">
@@ -424,8 +420,7 @@
 											</div>
 										</c:forEach>
 									</div>
-									<div class="button-set mb60" data-list-more="#product-items"
-										data-param="2">
+									<div class="button-set mb60" data-list-more="#product-items" data-param="2">
 										<c:choose>
 											<c:when test="${fn:length(searchcountlist)>12  }">
 												<button type="button" class="basic-big-button">더보기</button>
@@ -438,5 +433,4 @@
 					</div>
 				</form>
 			</div>
-</body>
 </html>

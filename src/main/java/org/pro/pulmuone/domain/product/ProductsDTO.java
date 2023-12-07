@@ -33,6 +33,8 @@ public class ProductsDTO {
 	   private String system_name;         // 이미지
 	   private String origin_name;         // 이미지
 	   
+	   private String pageNo;
+	   private String pageNo2;
 	   
 	   public String[] gettagArr() {
 		   return tags == null ? new String[] {} : this.tags.split(",");

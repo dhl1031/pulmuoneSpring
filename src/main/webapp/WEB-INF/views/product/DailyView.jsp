@@ -1,17 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html>
-<%@ include file="/WEB-INF/views/layouts/head.jsp"%>
-<body>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 	<script>
 	var formatter = new Intl.NumberFormat();
 	var days = ["A", "B", "C", "D", "E"];
 	var itemType = "daily";
-	var itemCode = "${dto.products_no}";
+	var itemCode = "${list[0].products_no}";
 	var eventIdx = "";
 	$(document).ready(function () {
         document.addEventListener("contextmenu", function (e){
@@ -218,12 +214,12 @@
 		data: {
 			mobilehost: "http://localhost",
 			webhost: "http://localhost/",
-			detailImage1: location.origin+ "/file/download"+'/product/${dto.system_name}',			
+			detailImage1: location.origin+ "/file/download"+'/product/${list[0].system_name}',			
 			weight: "${dto.products_size}",
-			path: "product/daily/view.do?tag=${dto.products_tag}",
-			productName: "${dto.products_name}",
-			slogan: "${dto.products_sub_name}",
-			thumbnail: location.origin+ "/file/download"+'/product/${dto.system_name}',
+			path: "product/daily/${list[0].products_tag}",
+			productName: "${list[0].products_name}",
+			slogan: "${list[0].products_sub_name}",
+			thumbnail: location.origin+ "/file/download"+'/product/${list[0].system_name}',
 			price: "<fmt:formatNumber value="${dto.price }" pattern="#,###" />",
 		}	
 	};
@@ -431,23 +427,23 @@
 					<div class="container">
 						<ul>
 							<li><a href="/">홈</a></li>
-							<li><a href="/product/daily/dailylist.do">매일배송</a></li>
+							<li><a href="/product/daily">매일배송</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="container">
 					<div class="product-info-area">
 						<div class="thumb-area">
-							<c:forEach var="dao" items="${list }" end="0">
+							<c:forEach var="dto" items="${list }" end="0">
 								<div class="main-thumb">
-									<img src="/file/download/product/${dao.system_name }">
+									<img src="/file/download/product/${dto.system_name }">
 								</div>
 							</c:forEach>
 							<ul class="sub-thumb">
-								<c:forEach var="dao" items="${list }" end="4">
+								<c:forEach var="dto" items="${list }" end="4">
 									<li class="active">
 										<button type="button" class="item">
-											<img src="/file/download/product/${dao.system_name }">
+											<img src="/file/download/product/${dto.system_name }">
 										</button>
 									</li>
 								</c:forEach>
@@ -460,8 +456,8 @@
 							<div style="height: 6px"></div>
 							<div class="prd-detail-title-area">
 								<div style="flex: 1; padding-right: 10px">
-									<h2>${dto.products_name }</h2>
-									<p>${dto.products_sub_name }</p>
+									<h2>${list[0].products_name }</h2>
+									<p>${list[0].products_sub_name }</p>
 								</div>
 								<button data-toggle="modal" data-target="#shareModal"
 									type="button" class="ellipse-button primary"
@@ -474,10 +470,10 @@
 									<span style="padding-right: 12px; font-size: 22px;">
 										(원산지 :상품상세 참조) </span>
 									<p>
-										<fmt:formatNumber value="${dto.price }" pattern="#,###" />
+										<fmt:formatNumber value="${list[0].price }" pattern="#,###" />
 										<span>원</span>
 									</p>
-									<span>(${dto.products_size })</span>
+									<span>(${list[0].products_size })</span>
 								</div>
 							</div>
 							<div class="buy-option">
@@ -676,8 +672,8 @@
 				</div>
 			</div>
 			<!-- Tab panes -->
-			<div class="tab-content">${dto.content }</div>
-			<a class="faq-product" href="/forum/faq/list.do">
+			<div class="tab-content">${list[0].content }</div>
+			<a class="faq-product" href="/forum/faq/list">
 				<div class="container">
 					<h2 class="part-title">FAQ</h2>
 					<p>자주 묻는 질문입니다.</p>
@@ -697,20 +693,20 @@
 					<div class="button-set"
 						style="margin-right: -4px; margin-bottom: 7px">						
 						<c:choose>
-							<c:when test="${dto.wish_status eq 1 }">
+							<c:when test="${list[0].wish_status eq 1 }">
 								<button class="button-fix interest-button  active"
-									data-wish-type="box" data-wish-id="${dto.products_tag }"></button>
+									data-wish-type="box" data-wish-id="${list[0].products_tag }"></button>
 							</c:when>
 							<c:otherwise>
 								<button class="button-fix interest-button " data-wish-type="box"
-									data-wish-id="${dto.products_tag }"></button>
+									data-wish-id="${list[0].products_tag }"></button>
 							</c:otherwise>
 						</c:choose>
 						<!-- 품절용 가이드 추가 -->
 						<button id="cartBtn" class="button-fix black">장바구니</button>
-						<form action="/daily/order/step1.do" method="GET">
+						<form action="/daily/order/step1" method="GET">
 							<input type="hidden" name="item"
-								value='{"item":[{"itemCode":"${dto.products_no }","dayQty":[1,1,1,1,1]}]'>
+								value='{"item":[{"itemCode":"${list[0].products_no }","dayQty":[1,1,1,1,1]}]'>
 							<button id="orderBtn" class="button-fix primary">바로구매</button>
 						</form>
 
@@ -718,10 +714,7 @@
 					</div>
 				</div>
 			</div>
-		</main>
-<%-- 		<%@ include file="/WEB-INF/views/layouts/footer.jsp"%> --%>
-<%-- 		<%@ include file="/WEB-INF/views/ui/kakaomodal.jsp"%> --%>
+		</main>>
 	</div>
-</body>
 </html>
 
