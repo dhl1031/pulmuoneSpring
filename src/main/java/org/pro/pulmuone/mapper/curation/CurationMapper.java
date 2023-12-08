@@ -10,16 +10,16 @@ public interface CurationMapper {
 
 
    // 6. 맞춤 프로그램
-   public List<CurationVO> selectPG(CurationVO vo)  throws ClassNotFoundException, SQLException;
+   public List<CurationVO> CurationSel(CurationVO vo)  throws ClassNotFoundException, SQLException;
 
    // 7. 맞춤 상품
-   public List<CurationVO> selectPD(String path, int program_no)  throws ClassNotFoundException, SQLException;
+  //  public List<CurationVO> selectPD(String path, int program_no)  throws ClassNotFoundException, SQLException;
    
    // 8. 키즈 상품
-   public List<KidsVO> selectList()  throws ClassNotFoundException, SQLException;
+   public List<KidsVO> kids()  throws ClassNotFoundException, SQLException;
    
    // 모달창
-   public List<KidsVO> select( KidsVO vo )  throws ClassNotFoundException, SQLException;
+   public List<KidsVO> modal( KidsVO vo )  throws ClassNotFoundException, SQLException;
    
    // 장바구니
    // int cartadd(Connection con, int tag) throws SQLException;

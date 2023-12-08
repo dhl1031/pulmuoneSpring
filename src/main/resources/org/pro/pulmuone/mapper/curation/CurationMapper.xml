@@ -5,7 +5,7 @@
 <mapper namespace="org.pro.pulmuone.mapper.curation.CurationMapper">
 	
 <!-- 	키즈 프로그램 -->
-	<select id="selectList" resultType="org.pro.pulmuone.domain.curation.KidsVO">
+	<select id="kids" resultType="org.pro.pulmuone.domain.curation.KidsVO">
 		SELECT kids_product_no, program_no, pi.img_no, program_name, dayweek, pi.products_no, p.products_name, program_content, 
 		products_tag, system_name, price, products_size, products_sub_name, origin_name 
 		FROM kids_product k JOIN products_img pi ON k.products_no = pi.products_no 
@@ -15,7 +15,7 @@
 	</select>
 	
 <!-- 	모달창 -->
-	<select id="select" resultType="org.pro.pulmuone.domain.curation.KidsVO">
+	<select id="modal" resultType="org.pro.pulmuone.domain.curation.KidsVO">
 		SELECT products_tag,  products_name, img_no, system_name, price, products_size, products_sub_name 
 		FROM  products_img pi JOIN products p ON p.products_no = pi.products_no 
 		WHERE products_tag = #{products_tag}  
@@ -37,7 +37,7 @@
 	</select>
 	
 <!-- 	큐레이션 결과-프로그램 -->
-	<select id="selectPG" resultType="org.pro.pulmuone.domain.curation.CurationVO">
+	<select id="CurationSel" resultType="org.pro.pulmuone.domain.curation.CurationVO">
 		SELECT curation_no, program_no, program_name, pi.img_no, dayweek, pi.products_no, p.products_name, program_content, products_tag, 
 		system_name, price, products_size, products_sub_name,  lifestyle_change01, lifestyle_change02, lifestyle_change03 
 		FROM curation_result c JOIN products_img pi ON c.img_no = pi.img_no 

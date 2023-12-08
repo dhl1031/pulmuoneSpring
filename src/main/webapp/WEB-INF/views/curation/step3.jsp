@@ -57,7 +57,7 @@
 		}
 		if(sessionStorage.getItem('req3')){
 			const prevReq3 = JSON.parse(sessionStorage.getItem('req3'))
-			console.log('req3', prevReq3)
+			console.log('req3', prevReq3)// 점수
 			$('.question-section').children().each((i,v)=>{
 				const idx = $(v).attr('id').replaceAll('q-','')
 				Object.keys(prevReq3).forEach((value, index)=>{
@@ -109,12 +109,13 @@
 				const req1 = JSON.parse(sessionStorage.getItem('req1'))
 				const req2 = JSON.parse(sessionStorage.getItem('req2'))
 				const req3 = JSON.parse(sessionStorage.getItem('req3'))
+				let params = `program_no={param.program_no}`
 
-					if (singleYn=='Y') {
-						location.href='result/products'  + '?singleYn=' + singleYn ;
-					}	else { 
-						location.href="result/programs"  + '?singleYn=' + singleYn ;
-					}
+				location.href = '/customer/product/result/' 
+			//	+ {param.program_no}
+				+ '?singleYn=' + singleYn 
+// 				+ '&bmi=' + bmi + '&questions='
+// 				+ data.RESULT_MSG.questions.join(',');
 				
 				const data = {...req1, ...req2, ...req3}
 				const body = Object.entries(data).filter(v => !!parseInt(v[0])).map(
@@ -125,26 +126,26 @@
 					if (bmi == 0 && req1.weight && req1.tallness) {
 						bmi = getBmi(req1.weight, req1.tallness)
 					}
+			
+// 					location.href +=  data.RESULT_MSG.execution.idx
+// 					+ '&bmi=' + bmi + '&questions='
+// 					+ data.RESULT_MSG.questions.join(',');
 					
-					location.href +=  data.RESULT_MSG.execution.idx
-					+ '&bmi=' + bmi + '&questions='
-					+ data.RESULT_MSG.questions.join(',');
+// 					if (singleYn=='Y') {
+// 						location.href='/customer/product/result/'  + '?singleYn=' + singleYn ;
+// 					}	else { 
+// 						location.href="/customer/product/result/"  + '?singleYn=' + singleYn ;
+// 					}
 					
-				
-
 // 					if (singleYn=='Y') {
 // 						location.href='result/products?' + data.RESULT_MSG.execution.idx + '?singleYn=' + singleYn + '&bmi=' + bmi + '&questions'	+ data.RESULT_MSG.questions.join(',');
 // 					}	else { 
 // 						location.href="result/programs?" + data.RESULT_MSG.execution.idx +'?singleYn=' + singleYn+ '&bmi=' + bmi + '&questions'	+ data.RESULT_MSG.questions.join(',');;
 // 					}
 					
-// 					location.href = '/customer/product/result/products.do' + data.RESULT_MSG.execution.idx
-// 					+ '?singleYn=' + singleYn + '&bmi=' + bmi + '&questions='
-// 					+ data.RESULT_MSG.questions.join(',');
+				
 			})
-			
-
-	}
+		}
             if (currentPage <= totalCnt) {
 				const data = {}
 				$('.question-section').children().each((i, v) => {
@@ -164,7 +165,11 @@
         })
 	})
 	
+	
+	
 </script>
+
+
 	<div class="wrapper">
 		<main class="step3">
 			<div class="breadcrumb-style">

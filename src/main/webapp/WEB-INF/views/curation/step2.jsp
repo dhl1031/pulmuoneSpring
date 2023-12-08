@@ -6,27 +6,26 @@
 	<div class="wrapper">
 			<main class="step2">
 			<div id="container-wrapper" class="container-wrapper"></div>
-			<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
-			<script>
+<script>
 $(function (){
 //     if(!sessionStorage.getItem('req1')){
 //         location.href ='/jspPro/pulmuone_curation/curation01.jsp'
 //     }
 	if(sessionStorage.getItem('req2')){
-		const prevReq2 = JSON.parse(sessionStorage.getItem('req2'))
-		console.log('req2', prevReq2)
+		const score = JSON.parse(sessionStorage.getItem('req2'))
+		console.log('req2', score)
 		$('.question-section').children().each((i,v)=>{
 			const idx = $(v).find('.idx').prop('name')
 
-			Object.keys(prevReq2).forEach((value,index)=>{
+			Object.keys(score).forEach((value,index)=>{
 				if(value === idx){
-					if(prevReq2[value]===$(v).find('.unit').children('.slider-group input:eq(1)').val()){
+					if(score[value]===$(v).find('.unit').children('.slider-group input:eq(1)').val()){
 						$(v).find('.unit').children('.slider-group input:eq(1)').prop('checked', true)
 						$(v).find('[data-pointer]')
 								.addClass("v1")
 								.removeClass("v0")
 								.removeClass("v2")
-					} else if(prevReq2[value]===$(v).find('.unit').children('.slider-group input:eq(2)').val()){
+					} else if(score[value]===$(v).find('.unit').children('.slider-group input:eq(2)').val()){
 						$(v).find('.unit').children('.slider-group input:eq(2)').prop('checked', true)
 						$(v).find('[data-pointer]')
 								.addClass("v2")
@@ -51,9 +50,9 @@ $(function (){
     });
 
 	$(document).on("click", "[data-radios] input[type='radio']", function () {
-		console.log($('.question-section').find('input[type=radio]').prop('value'))
+	//	console.log($('.question-section').find('input[type=radio]').prop('value'))
 		var p = $(this).parents("[data-radios]");
-		console.log($(this))
+	//	console.log($(this))
 		var v = 'v' + this.value;
 
 		p.find("[data-pointer]")
@@ -74,6 +73,7 @@ $(function (){
 					</ul>
 				</div>
 			</div>
+			
 			<form>
 				<div class="container curation">
 					<div class="curation-progress-bar">
@@ -100,13 +100,14 @@ $(function (){
 										<span></span> <span></span> <span></span>
 									</div>
 									<div class="slider-group">
-										<label class="unit" for="150"> <input class="idx"
-											checked name="15" id="150" type="radio" value="0"> <span>0~2일</span>
-										</label> <label class="unit" for="151"> <input class="idx"
-											name="15" id="151" type="radio" value="1"> <span>3~5일</span>
-										</label> <label class="unit" for="152"> <input class="idx"
-											name="15" id="152" type="radio" value="2"> <span>6일
-												이상</span>
+										<label class="unit" for="150"> 
+											<input class="idx" checked name="15" id="150" type="radio" value="0"> <span>0~2일</span>
+										</label> 
+										<label class="unit" for="151">
+											<input class="idx" name="15" id="151" type="radio" value="1"> <span>3~5일</span>
+										</label>
+										<label class="unit" for="152"> 
+											<input class="idx" name="15" id="152" type="radio" value="2"> <span>6일이상</span>
 										</label>
 									</div>
 								</div>
@@ -123,13 +124,14 @@ $(function (){
 										<span></span> <span></span> <span></span>
 									</div>
 									<div class="slider-group">
-										<label class="unit" for="160"> <input class="idx"
-											checked name="16" id="160" type="radio" value="0"> <span>0~2일</span>
-										</label> <label class="unit" for="161"> <input class="idx"
-											name="16" id="161" type="radio" value="1"> <span>3~5일</span>
-										</label> <label class="unit" for="162"> <input class="idx"
-											name="16" id="162" type="radio" value="2"> <span>6일
-												이상</span>
+										<label class="unit" for="160"> 
+											<input class="idx" checked name="16" id="160" type="radio" value="0"> <span>0~2일</span>
+										</label> 
+										<label class="unit" for="161"> 
+											<input class="idx" name="16" id="161" type="radio" value="1"> <span>3~5일</span>
+										</label> 
+										<label class="unit" for="162"> 
+											<input class="idx"	name="16" id="162" type="radio" value="2"> <span>6일	이상</span>
 										</label>
 									</div>
 								</div>
@@ -146,13 +148,12 @@ $(function (){
 										<span></span> <span></span> <span></span>
 									</div>
 									<div class="slider-group">
-										<label class="unit" for="170"> <input class="idx"
-											checked name="17" id="170" type="radio" value="0"> <span>0~2일</span>
-										</label> <label class="unit" for="171"> <input class="idx"
-											name="17" id="171" type="radio" value="1"> <span>3~5일</span>
-										</label> <label class="unit" for="172"> <input class="idx"
-											name="17" id="172" type="radio" value="2"> <span>6일
-												이상</span>
+										<label class="unit" for="170"> 
+											<input class="idx"	checked name="17" id="170" type="radio" value="0"> <span>0~2일</span>
+										</label> 
+										<label class="unit" for="171"> <input class="idx" name="17" id="171" type="radio" value="1"> <span>3~5일</span>
+										</label> 
+										<label class="unit" for="172"> <input class="idx" name="17" id="172" type="radio" value="2"> <span>6일이상</span>
 										</label>
 									</div>
 								</div>
@@ -169,13 +170,12 @@ $(function (){
 										<span></span> <span></span> <span></span>
 									</div>
 									<div class="slider-group">
-										<label class="unit" for="180"> <input class="idx"
-											checked name="18" id="180" type="radio" value="0"> <span>0~2일</span>
-										</label> <label class="unit" for="181"> <input class="idx"
-											name="18" id="181" type="radio" value="1"> <span>3~5일</span>
-										</label> <label class="unit" for="182"> <input class="idx"
-											name="18" id="182" type="radio" value="2"> <span>6일
-												이상</span>
+										<label class="unit" for="180"> 
+											<input class="idx"	checked name="18" id="180" type="radio" value="0"> <span>0~2일</span>
+										</label> 
+										<label class="unit" for="181"> <input class="idx" name="18" id="181" type="radio" value="1"> <span>3~5일</span>
+										</label> 
+										<label class="unit" for="182"> <input class="idx" name="18" id="182" type="radio" value="2"> <span>6일이상</span>
 										</label>
 									</div>
 								</div>
@@ -276,11 +276,8 @@ $(function (){
 						</div>
 					</div>
 					<div class="button-set w220">
-						<!-- 			<button class="button-basic border" onclick="location.href='/jspPro/pulmuone_curation/curation01.jsp'" type="button">이전으로</button> -->
-						<a href="javascript:history.back()" type="button"
-							class="button-basic border">이전으로</a>
-						<button class="next-btn button-basic primary" type="button"
-							id="nextPage">다음으로</button>
+						<a href="javascript:history.back()" type="button" class="button-basic border">이전으로</a>
+						<button class="next-btn button-basic primary" type="button" id="nextPage">다음으로</button>
 					</div>
 				</div>
 			</form>

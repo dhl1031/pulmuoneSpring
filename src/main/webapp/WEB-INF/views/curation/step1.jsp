@@ -22,17 +22,19 @@
       if(sessionStorage.getItem('req1')){
           const prevReq1 = JSON.parse(sessionStorage.getItem('req1'))
           console.log('req1', prevReq1)
+          var score = $(".checkGoal:checked").val();
+		console.log(score)
           const prevReqKey = Object.keys(prevReq1)
           $('input[name=tallness]').val(prevReq1.tallness)
           $('input[name=weight]').val(prevReq1.weight)
           $('.filled-radio-group').children().each((i,v)=>{
-              console.log(prevReqKey)
+              //console.log(prevReqKey)
               prevReqKey.forEach((value, index) => {
                   if(value===$(v).children().prop('name')){
                       $(v).children().prop('checked',true)
                   }
               })
-              console.log($(v).children().prop('name'))
+             // console.log($(v).children().prop('name'))
           })
 
       }
@@ -60,6 +62,8 @@
       }
     })
   })
+  
+ 
 </script>
 
 				<div class="breadcrumb-style">
@@ -87,23 +91,22 @@
 							</div>
 							<div class="filled-radio-group" id="health" value="all">
 
-								<label class="item"> <input type="checkbox" name="tired"
-									value="0" class="checkGoal">
+								<label class="item"> <input type="checkbox" name="tired" value="1" id="1" class="checkGoal">
 									<p>활력/피로</p>
-								</label> <label class="item"> <input type="checkbox" name="eye"
-									value="0" class="checkGoal">
+								</label> 
+								<label class="item"> <input type="checkbox" name="eye"	value="2" id="2" class="checkGoal">
 									<p>눈 건강</p>
-								</label> <label class="item"> <input type="checkbox"
-									name="sleep" value="0" class="checkGoal">
+								</label>
+								<label class="item"> <input type="checkbox" name="sleep" value="3" id="3" class="checkGoal">
 									<p>수면</p>
-								</label> <label class="item"> <input type="checkbox" name="lung"
-									value="0" class="checkGoal">
+								</label> 
+								<label class="item"> <input type="checkbox" name="lung"	value="4" id="4" class="checkGoal">
 									<p>장 건강</p>
-								</label> <label class="item"> <input type="checkbox"
-									name="stomach" value="0" class="checkGoal">
+								</label>
+								<label class="item"> <input type="checkbox" name="stomach" value="5" id="5" class="checkGoal">
 									<p>위 건강</p>
-								</label> <label class="item"> <input type="checkbox"
-									name="weight" value="0" class="checkGoal">
+								</label>
+								<label class="item"> <input type="checkbox" name="weight" value="6" id="6" class="checkGoal">
 									<p>체중 관리</p>
 								</label>
 
@@ -171,17 +174,20 @@
 						</div>
 					</div>
 
-				<script>
+<script type="text/javascript">
 
 //체크박스 선택 없으면 모달창
 $("#nextPage").on("click", function() {
 	if($("input:checkbox:checked").is(":checked") == true){
 		var data = $("input:checkbox:checked").val();
-					
+		 const requestBody = $('form').serializeObject();
+		var score = $(".checkGoal:checked").val();
+		console.log(score)
 		if (data.length > 0) {
 			$(this).attr("checked", true);
 		}
 		$("#alertModal").hide();
+		 sessionStorage.setItem('req1',JSON.stringify(requestBody));
 		location.href= "/customer/product/step2"
 	}else{
 		alert('1개 이상의 목표를 선택해 주세요');
@@ -189,7 +195,7 @@ $("#nextPage").on("click", function() {
 })
 
 </script>
-			</div>
+				</div>
 
 		</main>
 	</div>

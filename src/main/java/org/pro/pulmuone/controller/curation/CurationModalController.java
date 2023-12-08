@@ -38,7 +38,7 @@ public class CurationModalController {
 		
 //		vo.setOrigin_name(filed);
 //		vo.setOrigin_name(query);
-		List<KidsVO> list2 = this.curationMapper.select(vo);
+		List<KidsVO> list2 = this.curationMapper.modal(vo);
 		model.addAttribute("list2",list2);
 		return "result/modalview.modal";
 	}
