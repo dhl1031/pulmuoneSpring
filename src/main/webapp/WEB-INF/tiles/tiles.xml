@@ -9,24 +9,40 @@
    		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />
    		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
    		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
-   </definition>
-   
+    </definition>
+  <!--  메인 화면 -->
+    <definition name="home.*" extends="base">
+		<put-attribute name="main" value="/WEB-INF/views/{1}.jsp"/>	
+	</definition>
    <!-- */* -->
-   <definition name="*/*.tiles" extends="base">
-      <put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp" /> 
+    <definition name="*/*.tiles" extends="base">
+        <put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp" /> 
       
+    </definition>
+   
+	<!-- 큐레이션 결과 */* -->
+   <definition name="curation/*/*.tiles" extends="base">
+      <put-attribute name="main" value="/WEB-INF/views/curation/{1}/{2}.jsp" />     
    </definition>
    
+   <!-- 큐레이션 모달창 -->
+   <definition name="*/*.modal"  template="/WEB-INF/views/curation/result/modalview.jsp">
+      <put-attribute name="modal" value="/WEB-INF/views/curation/{1}/{2}.jsp" />     
+   </definition>
+
+
    <!-- forum/ -->
-   <definition name="forum/*/*.tiles" template="/WEB-INF/views/layouts/forum/layouts.jsp">
+    <definition name="forum/*/*.tiles" template="/WEB-INF/views/layouts/forum/layouts.jsp">
    		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />
    		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
    		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
 	    <put-attribute name="aside" value="/WEB-INF/views/layouts/forum/aside.jsp" /> 
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />    
+		
+		<put-attribute name="page" value="{1}"></put-attribute>
    </definition>
 
-     
+
     
     <!-- customer.notice -->  
     <!-- customer.noticeReg -->  

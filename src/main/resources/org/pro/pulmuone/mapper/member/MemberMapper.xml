@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pro.pulmuone.mapper.member.MemberMapper">
+
+	<!-- public MemberVO getMember(String id) throws ClassNotFoundException, SQLException; -->
+	 <select id="getMember" resultType="org.pro.pulmuone.domain.member.MemberDTO">
+		SELECT * 
+		FROM MEMBER
+		WHERE ID = #{id}
+	 </select>
+
+
+	<!-- public int insert(MemberVO member) throws ClassNotFoundException, SQLException; -->
+	<insert id="insert">
+		INSERT INTO MEMBER(ID, PWD, NAME, GENDER, BIRTH, IS_LUNAR, CPHONE, EMAIL, HABIT, REGDATE)
+		VALUES( #{id}, #{pwd}, #{name}, #{gender}, #{birth}, #{is_lunar}, #{cphone}, #{email}, #{habit}, SYSDATE)
+		<!-- MemberVO 객체의 필드값을 그대로 가져와서 사용. 단, 필드명과 일치해야 함 -->
+	</insert>
+	
+	
+	<!-- 	public MemberVO read(String userid); -->
+	<resultMap type="org.pro.pulmuone.domain.member.MemberDTO" id="memberMap">
+		<id property="memberId" column="member_id" />
+		<result property="memberNo" column="member_no" />
+		<result property="memberId" column="member_id" />
+		<result property="pwd" column="pwd" />
+		<result property="name" column="name" />
+<!-- 		<result property="regDate" column="reg_date" /> -->
+<!-- 		<result property="tel" column="tel" /> -->
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	<resultMap type="org.pro.pulmuone.domain.auth.AuthVO" id="authMap"> 
+		<result property="memberId" column="member_id" />
+		<result property="authority" column="authority" /> 
+	</resultMap>
+		
+		
+	<select id="read" resultMap="memberMap">
+	 SELECT member_no, m.member_id, pwd, name, authority
+	 FROM member m LEFT JOIN member_authorities auth ON m.member_id = auth.member_id
+	 WHERE m.member_id = #{userid}
+	</select>
+</mapper>

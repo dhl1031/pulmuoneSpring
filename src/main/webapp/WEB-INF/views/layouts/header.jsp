@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%@ taglib prefix="u" tagdir="/WEB-INF/tags" %> --%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!-- header -->
 <header id="header">
 
@@ -28,13 +29,13 @@
                     </button>
                </li>
                      <li>
-                  <a href="/product/daily/dailylist">매일배송</a>
+                  <a href="/product/daily">매일배송</a>
                </li>
                <li>
-                  <a href="/product/box/boxlist">택배배송</a>
+                  <a href="/product/box">택배배송</a>
                </li>
                <li>
-                  <a href="/customer/product/product">맞춤큐레이션</a>
+                  <a href="/customer/product">맞춤큐레이션</a>
                </li>
                <li>
                   <a href="/taste/taste">시음선물</a>
@@ -48,13 +49,17 @@
             </ul>
          </nav>
       </div>
+
       <div class="member-search-area">
          <div class="head-util-area">
-            <u:isLogin>
-               <p class="welcome">
-                  <b style="margin: 0;"><c:out value="${ auth.getName() }" /> <a href="/member/logout" type="button" class="logout-btn">로그아웃</a></b>님, 건강한 습관 풀무원녹즙입니다.
-               </p>
-            </u:isLogin>
+            <sec:authorize access="isAuthenticated()">
+	            <p class="welcome">
+	                <b style="margin: 0;"><sec:authentication property="principal.member.name"/> <a href="" type="button" class="logout-btn">로그아웃</a></b>님, 건강한 습관 풀무원녹즙입니다.
+		            <form action="/member/logout" method="post" id="logout">
+		            	<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+	            	</form>
+	            </p>
+            </sec:authorize>
             <a href="/mypage" data-require-login="true"> 
                <i class="ico ico-myIcon"></i>
                <span class="hide">로그인 페이지 / 마이 페이지로 가기</span>
@@ -82,31 +87,31 @@
                <ul>
                   
                   <li>
-                     <a href="/product/daily/dailylist" title="해당 페이지로 가기">전체</a>
+                     <a href="/product/daily" title="해당 페이지로 가기">전체</a>
                   </li>
                   
                   <li>
-                     <a href="/product/daily/dailylist?category=1" title="해당 페이지로 가기">녹즙</a>
+                     <a href="/product/daily?category=1" title="해당 페이지로 가기">녹즙</a>
                   </li>
                   
                   <li>
-                     <a href="/product/daily/dailylist?category=4" title="해당 페이지로 가기">엑스투</a>
+                     <a href="/product/daily?category=4" title="해당 페이지로 가기">엑스투</a>
                   </li>
                   
                   <li>
-                     <a href="/product/daily/dailylist?category=31" title="해당 페이지로 가기">유산균</a>
+                     <a href="/product/daily?category=31" title="해당 페이지로 가기">유산균</a>
                   </li>
                   
                   <li>
-                     <a href="/product/daily/dailylist?category=60" title="해당 페이지로 가기">유제품</a>
+                     <a href="/product/daily?category=60" title="해당 페이지로 가기">유제품</a>
                   </li>
                   
                   <li>
-                     <a href="/product/daily/dailylist?category=62" title="해당 페이지로 가기">건강즙</a>
+                     <a href="/product/daily?category=62" title="해당 페이지로 가기">건강즙</a>
                   </li>
                   
                   <li>
-                     <a href="/product/daily/dailylist?category=64" title="해당 페이지로 가기">영양&amp;간식</a>
+                     <a href="/product/daily?category=64" title="해당 페이지로 가기">영양&amp;간식</a>
                   </li>
                   
                </ul>
@@ -117,31 +122,31 @@
                <ul>
                   
                   <li>
-                     <a href="/product/box/boxlist" title="해당 페이지로 가기">전체</a>
+                     <a href="/product/box" title="해당 페이지로 가기">전체</a>
                   </li>
                   
                   <li>
-                     <a href="/product/box/boxlist?category=38" title="해당 페이지로 가기">녹즙</a>
+                     <a href="/product/box?category=38" title="해당 페이지로 가기">녹즙</a>
                   </li>
                   
                   <li>
-                     <a href="/product/box/boxlist?category=15" title="해당 페이지로 가기">스무디</a>
+                     <a href="/product/box?category=15" title="해당 페이지로 가기">스무디</a>
                   </li>
                   
                   <li>
-                     <a href="/product/box/boxlist?category=8" title="해당 페이지로 가기">클렌즈랩</a>
+                     <a href="/product/box?category=8" title="해당 페이지로 가기">클렌즈랩</a>
                   </li>
                   
                   <li>
-                     <a href="/product/box/boxlist?category=5" title="해당 페이지로 가기">건강즙</a>
+                     <a href="/product/box?category=5" title="해당 페이지로 가기">건강즙</a>
                   </li>
                   
                   <li>
-                     <a href="/product/box/boxlist?category=56" title="해당 페이지로 가기">키즈</a>
+                     <a href="/product/box?category=56" title="해당 페이지로 가기">키즈</a>
                   </li>
                   
                   <li>
-                     <a href="/product/box/boxlist?category=63" title="해당 페이지로 가기">영양&amp;간식</a>
+                     <a href="/product/box?category=63" title="해당 페이지로 가기">영양&amp;간식</a>
                   </li>
                   
                </ul>
@@ -215,7 +220,7 @@
          <div class="sub-link">
             <div>
                <b>맞춤큐레이션</b>
-               <a href="/customer/product/product" title="해당 페이지로 가기">간단한 질문에 답하면 고객 맞춤 상품을 추천드려요
+               <a href="/customer/product" title="해당 페이지로 가기">간단한 질문에 답하면 고객 맞춤 상품을 추천드려요
                   <i class="ico ico-arr-right6"></i>
                </a>
             </div>
@@ -233,11 +238,14 @@
       </div>
    </div>
 </header>
+
 <script type="text/javascript">
    $('.logout-btn').click(function (){
 //        if(confirm('로그아웃 하시겠습니까?')){
    			
 //        }
+		event.preventDefault();
+		$("#logout").submit();
    })
    $(document).ready(function(){
        $('.welcome b').hover(function() {
@@ -245,5 +253,6 @@
        }, function(){
            $('.logout-btn').stop().fadeOut('500');
        });
+
    });
 </script>
