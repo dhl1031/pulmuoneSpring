@@ -18,9 +18,11 @@
 	   -->
 	   
 	  <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-	  <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@192.168.10.166:1521:xe"></property>
-	  <property name="username" value="pulmu"></property>
-	  <property name="password" value="p1234"></property> 
+
+	  <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@192.168.10.166:1521:xe"/>
+	  <property name="username" value="pulmu"/>
+	  <property name="password" value="p1234"/> 
+
 	</bean>
 	
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">

@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="page-content">
 	<form id="searchForm">
-		<%-- <input type="hidden" id="category" name="category" value="<%=category == null ? "" : category%>"> --%>
+		<input type="hidden" id="category" name="category" value="${param.category == null ? '' : param.category}">
 		<div class="border-wrapper">
 			<h2 class="container-title">
 				FAQ
@@ -69,16 +70,15 @@
 			</c:if>
 			<div class="accordion faq-list" id="pagable-list" data-list-object="replace">
 				<c:choose>
-					
-					<c:when test="${ param.category == null && param.category != '' }">
-						<%-- <%@ include file="top10.jsp" %> --%>
+					<c:when test="${ param.category == null || param.category == '' && searchKeyword eq '' && searchKeyword eq null }">
+						<%@ include file="top10.jsp" %>
 					</c:when>
 					<c:otherwise>
 						<c:choose>
-							<c:when test="${ list.size() eq null }">
+							<c:when test="${ list.size() eq 0 }">
 								<div class="empty-area" style="padding: 160px 0">
 									<img src="/resources/assets/images/ui/ico-alert.png" alt="empty">
-									<b>검색결과가 없습니다.</b>
+									<b>등록된 목록이 없습니다.</b>
 								</div>
 							</c:when>
 							<c:otherwise>
@@ -149,11 +149,12 @@
 		$("#searchKeyword").focus();
 		$("#searchKeyword").select();
 		
+		let cate = `${param.category == "" ? 0 : param.category}`;
  		
 		$("#searchKeyword").val( `${param.searchKeyword }`);
 		
 		$(".faq .tab-area ul li a").removeClass("active");
-		<%-- $(".faq .tab-area ul li").eq(<%=category%>).find("a").addClass("active"); --%>
+		$(".faq .tab-area ul li").eq(cate).find("a").addClass("active");
 		
 		let $pageItem = $(".faq .pagenavi-area .pagination .page-item a");
 		

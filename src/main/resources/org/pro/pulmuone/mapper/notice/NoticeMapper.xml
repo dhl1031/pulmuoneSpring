@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="org.pro.pulmuone.mapper.notice.NoticeMapper">
+	<!--  // 조회
+	ArrayList<NoticeDTO> select(int pageNo, int numberPerPage) throws SQLException; -->
+     <select id="select" resultType="org.pro.pulmuone.domain.notice.NoticeDTO">
+      <![CDATA[
+		SELECT *
+			FROM (
+				SELECT ROWNUM no, n.*
+				FROM (
+					SELECT notice_no, title, content, regdate
+					FROM notice
+					ORDER BY regdate DESC
+				) n
+			) b
+		WHERE b.no BETWEEN (#{param1}-1) * #{param2} + 1 AND ((#{param1}-1) * #{param2}) + #{param2}
+		]]> 
+     </select>
+     
+     
+     <!--// 총 개수 
+		int selectCount() throws SQLException;
+      -->
+     <select id="selectCount" resultType="int">
+     	SELECT COUNT(*)
+		FROM notice
+     </select>
+     
+     <!-- // 총 페이지 
+		int getTotalPages(int numberPerPage) throws SQLException; -->
+	<select id="getTotalPages" resultType="int">
+		SELECT CEIL(COUNT(*)/ #{param1})
+		FROM notice 
+	</select>
+	
+	
+	<!-- 상세보기  
+	 NoticeDTO view(int seq) throws SQLException -->
+	 <select id="view" resultType="org.pro.pulmuone.domain.notice.NoticeDTO">
+	 	SELECT notice_no, title, content, regdate
+		FROM notice
+		WHERE notice_no = #{param1} 
+	 </select>
+	 
+	<!--  int write(NoticeDTO dto) throws SQLException  --> 
+	<insert id="write">
+		INSERT INTO notice (notice_no, title, content)
+		VALUES ( seq_notice.NEXTVAL, #{title}, #{content} ) 
+	</insert>
+	 
+	 
+	 <!-- int delete(int seq) throws SQLException  -->
+	 <delete id="delete">
+	 	DELETE FROM notice
+		WHERE notice_no = #{param1} 
+	 </delete>
+	 
+	 <!-- int edit(NoticeDTO dto) throws SQLException -->
+	 <update id="edit">
+	 	UPDATE notice
+		SET title = #{title}, content = #{content}
+		WHERE notice_no = #{notice_no} 
+	 </update>
+</mapper>
+

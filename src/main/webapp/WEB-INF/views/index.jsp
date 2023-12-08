@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="/WEB-INF/views/layouts/head.jsp"%>
+
 <body>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -30,7 +30,7 @@
 		});
 	</script>
 	<div class="wrapper">
-		<%@ include file="/WEB-INF/views/layouts/header.jsp"%>
+		
 		<main class="page">
 			<div id="container-wrapper" class="container-wrapper">
 				<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
@@ -658,11 +658,6 @@
 				</div>
 			</div>
 		</main>		
-		<%@ include file="/WEB-INF/views/layouts/footer.jsp"%>
-		<%@ include file="/WEB-INF/views/ui/footermodal.jsp"%>
-		<%@ include file="/WEB-INF/views/ui/wishmodal.jsp"%>
-		<%@ include file="/WEB-INF/views/ui/cartmodal.jsp"%>
-
 	</div>
 </body>
 </html>
