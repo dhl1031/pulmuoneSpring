@@ -26,4 +26,48 @@
      	]]>
      </select>
      
+     <!-- public List<DailyItemInfoDTO> getproductList(@Param("searchKeyword") String searchKeyword, @Param("pageNo") int pageNo); -->
+     <select id="getproductList" resultType="org.pro.pulmuone.domain.order.daily.DailyItemInfoDTO">
+     	<choose>
+     		<when test="searchKeyword != null and searchKeyword != ''">
+     			<![CDATA[
+		            SELECT products_no, products_name, img_path, system_name, products_size, price, total_count
+			     	FROM (
+					     		SELECT p.products_no, products_name, img_path, system_name, products_size, price, ROWNUM rn
+		                                , (SELECT COUNT(*) FROM products WHERE products_name LIKE '%'||#{searchKeyword}||'%') total_count
+						     	FROM products p JOIN products_img i ON p.products_no = i.products_no
+						     	WHERE origin_name != 'View.png' AND ROWNUM <= #{pageNo} * 8 AND products_name LIKE '%'||#{searchKeyword}||'%'
+			     			) a
+			     	WHERE rn > (#{pageNo} - 1) * 8
+			     ]]>
+     		</when>
+     		<otherwise>
+     			<![CDATA[
+		            SELECT products_no, products_name, img_path, system_name, products_size, price, total_count
+			     	FROM (
+					     		SELECT p.products_no, products_name, img_path, system_name, products_size, price, ROWNUM rn
+		                                , (SELECT COUNT(*) FROM products) total_count
+						     	FROM products p JOIN products_img i ON p.products_no = i.products_no
+						     	WHERE origin_name != 'View.png' AND ROWNUM <= #{pageNo} * 8
+			     			) a
+			     	WHERE rn > (#{pageNo} - 1) * 8
+			     ]]>
+     		</otherwise>
+     	</choose>
+     </select>
+     
+	<!-- public String getFranchise(@Param("latitude") double latitude, @Param("longitude") double longitude, @Param("fc_type")  int fc_type); -->
+     <select id="getFranchise" resultType="String">
+     	<![CDATA[
+	     	SELECT f.fc_name
+			FROM (
+			        SELECT fc_name, POWER(#{longitude} - fc_lat, 2) + POWER(#{latitude} - fc_lng, 2) lat
+			        FROM franchise
+        			WHERE fc_type IN(2, #{fc_type})
+			        ORDER BY lat
+			        ) f
+			WHERE ROWNUM = 1 AND lat < 0.001
+		]]>
+     </select>
+     
 </mapper>

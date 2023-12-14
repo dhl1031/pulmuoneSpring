@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pro.pulmuone.mapper.mypage.personal.refund.RefundMapper">
+
+	<resultMap type="org.pro.pulmuone.domain.mypage.personal.refund.RefundDTO" id="refundMap">
+		<result property="memberNo" column="member_no"></result>
+		<result property="insttCode" column="instt_code"></result>
+		<result property="acctOwner" column="acct_owner"></result>
+		<result property="acctNum" column="acct_num"></result>
+		<result property="insttName" column="instt_name"></result>
+	</resultMap>
+	
+	<resultMap type="org.pro.pulmuone.domain.mypage.personal.refund.RefundInsttDTO" id="insttMap">
+		<result property="insttCode" column="instt_code"></result>
+		<result property="insttName" column="instt_name"></result>
+	</resultMap>
+
+	<select id="selectRefundAcct" resultMap="refundMap">
+		SELECT refund_acct.* , (SELECT instt_name FROM refundable_instt WHERE instt_code = refund_acct.instt_code) AS instt_name
+		FROM refund_acct
+		WHERE member_no = #{memberNo}
+	</select>
+
+	<insert id="insert">
+		INSERT INTO refund_acct
+		VALUES ( #{dto.memberNo}, #{dto.insttCode}, #{dto.acctOwner}, #{dto.acctNum} )
+	</insert>
+
+	<update id="update">
+		UPDATE refund_acct
+		SET instt_code = #{dto.insttCode}, acct_owner = #{dto.acctOwner}, acct_num = #{dto.acctNum}
+		WHERE member_no = #{dto.memberNo}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM refund_acct
+		WHERE member_no = #{memberNo}
+	</delete>
+
+	<select id="selectAllRefundInstt" resultMap="insttMap">
+		SELECT *
+		FROM refundable_instt
+	</select>
+
+</mapper>

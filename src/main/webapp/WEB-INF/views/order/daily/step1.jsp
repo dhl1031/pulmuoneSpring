@@ -21,6 +21,7 @@
 					<%@ include file="/WEB-INF/views/layouts/order/daily/addrInputForm.jsp"%>
 					<%@ include file="/WEB-INF/views/layouts/order/daily/shipInfo.jsp"%>
 					<%@ include file="/WEB-INF/views/layouts/order/daily/payInfo.jsp"%>
+					<%@ include file="/WEB-INF/views/layouts/order/daterangepicker.jsp"%>
 				</div>
 
 				<%@ include file="/WEB-INF/views/layouts/order/daily/orderInfo.jsp"%>
@@ -35,11 +36,11 @@
 	})
 </script>
 <script>
-	$("button.prod-add").on("click", function() {
+	$("#order_targets").on("click", ".prod-add", function() {
 		plusBtn($(this));
 	})
 
-	$("button.prod-remove").on("click", function() {
+	$("#order_targets").on("click", ".prod-remove", function() {
 		minusBtn($(this));
 	})
 	

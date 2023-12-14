@@ -320,6 +320,7 @@ function getFranchise(latitude, longitude, fc_type){
 		, method: "GET"
 		, data: { latitude : latitude, longitude : longitude, fc_type : fc_type }
 		, cache: false
+		, async: false
 		, success: function(data, callback, xhr) {
 			if(data == "") data = "배송이 불가한 지역입니다.";
 			$('#prtnName').val(data);

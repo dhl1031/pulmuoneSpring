@@ -109,10 +109,6 @@ public class DailyOrderController {
 			System.out.println(allParameters.get(string));
 		} // while
 		
-		/*
-		
-		*/
-		
 		return "order/box/step2.tiles";
 	}
 
