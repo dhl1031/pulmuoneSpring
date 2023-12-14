@@ -586,23 +586,6 @@
 						<button class="btn-plus" type="button">
 							+<span class="hide">제품 추가</span>
 						</button>
-
-					<div class="button-set"
-						style="margin-right: -4px; margin-bottom: 7px">
-						<c:choose>
-							<c:when test="${list[0].wish_status eq 1 }">
-								<button class="button-fix interest-button  active"
-									data-wish-type="box" data-wish-id="${list[0].products_tag }"></button>
-							</c:when>
-							<c:otherwise>
-								<button class="button-fix interest-button " data-wish-type="box"
-									data-wish-id="${list[0].products_tag }"></button>
-							</c:otherwise>
-						</c:choose>
-						<!-- 품절용 가이드 추가 -->
-						<button id="cartBtn" class="button-fix black">장바구니</button>
-						<button id="orderBtn" class="button-fix primary">바로구매</button>
-
 					</div>
 				</div>
 				<div class="prd-detail-modal-title " style="margin-left: 50px">
@@ -630,6 +613,7 @@
 			</div>
 		</div>
 	</div>
+
 </main>
 </html>
 

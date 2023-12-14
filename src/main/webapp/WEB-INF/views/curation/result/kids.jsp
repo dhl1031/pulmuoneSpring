@@ -1,19 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html lang="ko">
+<main class="Cart">
 
-<body>
+	<div id="container-wrapper" class="container-wrapper">
+		<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
 
-	<main class="Cart">
-
-		<div id="container-wrapper" class="container-wrapper">
-			<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
-			
-<script type="text/javascript">
+		<script type="text/javascript">
   var singleYn = 'N' == 'Y';
   $(function () {
 
@@ -24,7 +18,7 @@
     function getItems(lbl) {
       var items = {};
       $("input[name='itemCode']").each(function (i, item) {
-        var el = $(item);
+        var el = $(item);        
         if (el.is(":checked") || el.is("[type='hidden']")) {
           var itemCode = el.val();
           if (singleYn) {
@@ -36,14 +30,16 @@
           }
         }
       })
+      
 
       var orderItems = [];
       for (var key of Object.keys(items)) {
         orderItems.push({
           itemCode: key,
           [lbl]: items[key]
-        });
+        });        
       }
+      
       return orderItems;
     }
 
@@ -69,13 +65,22 @@
       if (orderItems.length === 0) {
         alert("상품을 선택해주세요.");
         return;
-      }
-      addCarts("daily", orderItems);
+      }                 
+			var param = [];
+			for (var i = 0; i < orderItems.length; i++) {
+		 		param.push(Object.values(orderItems)[i].itemCode);	
+			}
+    	    axios.get('/cart/kid/save?products_no='+ encodeURIComponent(param.join(","))).then(function ({data}) {      
+    	        alert("제품이 담겼습니다.");
+    	    }).catch(function (e) {
+    	      alert("서버와 연결이 올바르지 않습니다.");
+    	    })    	        	        	   
+      
     });
 
   })
 </script>
-			<script>
+		<script>
   var singleYn = "N" == 'Y';
   var title = "키즈";
   var data = {
@@ -112,7 +117,7 @@
 
 
 
-			<script>
+		<script>
   var nowArgs = undefined;
   window.orderProcess = function (args) {
     if (!window.is_signed) {
@@ -227,7 +232,7 @@
     }
   })
 </script>
-			<textarea id="orderPosLi" style="display: none">    &lt;li&gt;
+		<textarea id="orderPosLi" style="display: none">    &lt;li&gt;
         &lt;label class="item-wrapper"&gt;
             &lt;input name="custnum" type="radio" value="{custnumber}" data-prtn-id="{prtnId}" /&gt;
             &lt;div class="item"&gt;
@@ -241,171 +246,129 @@
     &lt;/li&gt;
 </textarea>
 
-			<div class="modal" id="orderModal" tabindex="-1"
-				aria-labelledby="orderModal" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header" style="padding-bottom: 8px;">
-							<h5 class="modal-title" id="orderModalLabel">선택하세요</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close"></button>
-						</div>
-						<div class="modal-body select-wrapper">
-							<ul class="product-content-list order">
+		<div class="modal" id="orderModal" tabindex="-1" aria-labelledby="orderModal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header" style="padding-bottom: 8px;">
+						<h5 class="modal-title" id="orderModalLabel">선택하세요</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body select-wrapper">
+						<ul class="product-content-list order">
 
-							</ul>
-						</div>
-						<div class="button-set">
-							<button type="button" class="button-basic black"
-								data-type="continue">기존 주문에 상품 추가</button>
-							<button type="button" class="button-basic primary"
-								data-type="new">신규 배송지로 주문</button>
-						</div>
+						</ul>
+					</div>
+					<div class="button-set">
+						<button type="button" class="button-basic black" data-type="continue">기존 주문에 상품 추가</button>
+						<button type="button" class="button-basic primary" data-type="new">신규 배송지로 주문</button>
 					</div>
 				</div>
 			</div>
-
-			<div class="breadcrumb-style">
-				<div class="container">
-					<ul>
-						<li><a>홈</a></li>
-						<li><a class="active">맞춤큐레이션</a></li>
-					</ul>
-				</div>
-			</div>
-
-			<div class="container curation">
-
-				<div class="question-part">
-					<div class="title">
-						<h3>	당신에게 추천드리는 <b>녹즙 프로그램</b></h3>
-					</div>
-
-					<div class="card-item">
-						<div class="product-wrapper">
-
-							<p style="margin-bottom: 12px">키즈</p>
-							<ul class="product-list" id="order2">
-
-								<li data-item-index="0" data-item-link="product/daily/430"
-									data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/20210923/ecc8e6be-08ba-42a0-a9f9-a620944fe11d.jpg"
-									data-item-title="슈퍼키즈하이" data-item-desc="2000"><input
-									value="0072840" name="itemCode" type="hidden"> <a
-									class="item" data-product-preview="430"> <label>월</label>
-										<div class="thumb">
-											<img
-												src="/file/download/product/ecc8e6be-08ba-42a0-a9f9-a620944fe11d.jpg"
-												onerror="this.src='/resources/images/common/no_img.png'"
-												alt="">
-										</div>
-										<div class="text-wrapper">
-											<span>슈퍼키즈하이</span>
-										</div>
-								</a></li>
-
-								<li data-item-index="1" data-item-link="product/daily/438"
-									data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/20220323/7bad52bc-f656-493c-856e-8ed41dc487dc.jpg"
-									data-item-title="채소습관 케일" data-item-desc="1600"><input
-									value="0072976" name="itemCode" type="hidden"> <a
-									class="item" data-product-preview="438"> <label>화</label>
-										<div class="thumb">
-											<img
-												src="/file/download/product/7bad52bc-f656-493c-856e-8ed41dc487dc.jpg"
-												onerror="this.src='/resources/images/common/no_img.png'"
-												alt="">
-										</div>
-										<div class="text-wrapper">
-											<span>채소습관 케일</span>
-										</div>
-								</a></li>
-
-								<li data-item-index="2" data-item-link="product/daily/430"
-									data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/20210923/ecc8e6be-08ba-42a0-a9f9-a620944fe11d.jpg"
-									data-item-title="슈퍼키즈하이" data-item-desc="2000"><input
-									value="0072840" name="itemCode" type="hidden"> <a
-									class="item" data-product-preview="430"> <label>수</label>
-										<div class="thumb">
-											<img
-												src="/file/download/product/ecc8e6be-08ba-42a0-a9f9-a620944fe11d.jpg"
-												onerror="this.src='/resources/images/common/no_img.png'"
-												alt="">
-										</div>
-										<div class="text-wrapper">
-											<span>슈퍼키즈하이</span>
-										</div>
-								</a></li>
-
-								<li data-item-index="3" data-item-link="product/daily/438"
-									data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/20220323/7bad52bc-f656-493c-856e-8ed41dc487dc.jpg"
-									data-item-title="채소습관 케일" data-item-desc="1600"><input
-									value="0072976" name="itemCode" type="hidden"> <a
-									class="item" data-product-preview="438"> <label>목</label>
-										<div class="thumb">
-											<img
-												src="/file/download/product/7bad52bc-f656-493c-856e-8ed41dc487dc.jpg"
-												onerror="this.src='/resources/images/common/no_img.png'"
-												alt="">
-										</div>
-										<div class="text-wrapper">
-											<span>채소습관 케일</span>
-										</div>
-								</a></li>
-
-								<li data-item-index="4" data-item-link="product/daily/430"
-									data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/20210923/ecc8e6be-08ba-42a0-a9f9-a620944fe11d.jpg"
-									data-item-title="슈퍼키즈하이" data-item-desc="2000"><input
-									value="0072840" name="itemCode" type="hidden"> <a
-									class="item" data-product-preview="430"> <label>금</label>
-										<div class="thumb">
-											<img
-												src="/file/download/product/ecc8e6be-08ba-42a0-a9f9-a620944fe11d.jpg"
-												onerror="this.src='/resources/images/common/no_img.png'"
-												alt="">
-										</div>
-										<div class="text-wrapper">
-											<span>슈퍼키즈하이</span>
-										</div>
-								</a></li>
-
-							</ul>
-						</div>
-						<div class="button-set sm" style="margin: 20px 0px">
-
-								<form action="/cart/daily">
-								<button id="cartBtn" class="button-basic black">장바구니</button>
-								</form>
-
-								<form action="/daily/order/step1" method="GET">
-								<c:forEach var="dto" items="${list }">
-									<input type="hidden" name="item"
-										value='{"item":[{"itemCode":"${dto.products_no}, ${dto.products_no }","dayQty":[1,1,1,1,1]}]'>
-								</c:forEach>
-								<button id="orderBtn" class="button-basic primary">주문하기</button>
-							</form>
-						</div>
-
-					</div>
-
-				</div>
-				<div class="result-text">우리 아이를 위한 대표 어린이녹즙 슈퍼키즈하이는 유기농 케일에
-					사과, 오렌지 등 과일 농축액으로 맛까지 챙겼어요. 또한 면역력 증진과 함께 피부 건강에 도움을 줄 수 있다고 알려진
-					알로에겔이 함유되어 있답니다.</div>
-
-				<div class="button-set">
-					<button class="button-basic kakao prefix"
-						onclick="javascript:sendKakao()">
-						<i class="ico"></i> 카카오톡으로 공유
-					</button>
-				</div>
-			</div>
-
 		</div>
 
-		<div class="modal" id="productPreviewModal" tabindex="-1" style="display: none;" aria-modal="true">
-			<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
-				<div class="modal-content modal-product"></div>
+		<div class="breadcrumb-style">
+			<div class="container">
+				<ul>
+					<li><a>홈</a></li>
+					<li><a class="active">맞춤큐레이션</a></li>
+				</ul>
 			</div>
 		</div>
-	</main>
-</body>
+
+		<div class="container curation">
+
+			<div class="question-part">
+				<div class="title">
+					<h3>
+						당신에게 추천드리는 <b>녹즙 프로그램</b>
+					</h3>
+				</div>
+
+				<div class="card-item">
+					<div class="product-wrapper">
+
+						<p style="margin-bottom: 12px">키즈</p>
+						<ul class="product-list" id="order2">
+
+							<li data-item-index="0" data-item-link="product/daily/430" data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/20210923/ecc8e6be-08ba-42a0-a9f9-a620944fe11d.jpg" data-item-title="슈퍼키즈하이" data-item-desc="2000"><input value="0072840" name="itemCode" type="hidden"> <a class="item" data-product-preview="430"> <label>월</label>
+									<div class="thumb">
+										<img src="/file/download/product/ecc8e6be-08ba-42a0-a9f9-a620944fe11d.jpg" onerror="this.src='/resources/images/common/no_img.png'" alt="">
+									</div>
+									<div class="text-wrapper">
+										<span>슈퍼키즈하이</span>
+									</div>
+							</a></li>
+
+							<li data-item-index="1" data-item-link="product/daily/438" data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/20220323/7bad52bc-f656-493c-856e-8ed41dc487dc.jpg" data-item-title="채소습관 케일" data-item-desc="1600"><input value="0072976" name="itemCode" type="hidden"> <a class="item" data-product-preview="438"> <label>화</label>
+									<div class="thumb">
+										<img src="/file/download/product/7bad52bc-f656-493c-856e-8ed41dc487dc.jpg" onerror="this.src='/resources/images/common/no_img.png'" alt="">
+									</div>
+									<div class="text-wrapper">
+										<span>채소습관 케일</span>
+									</div>
+							</a></li>
+
+							<li data-item-index="2" data-item-link="product/daily/430" data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/20210923/ecc8e6be-08ba-42a0-a9f9-a620944fe11d.jpg" data-item-title="슈퍼키즈하이" data-item-desc="2000"><input value="0072840" name="itemCode" type="hidden"> <a class="item" data-product-preview="430"> <label>수</label>
+									<div class="thumb">
+										<img src="/file/download/product/ecc8e6be-08ba-42a0-a9f9-a620944fe11d.jpg" onerror="this.src='/resources/images/common/no_img.png'" alt="">
+									</div>
+									<div class="text-wrapper">
+										<span>슈퍼키즈하이</span>
+									</div>
+							</a></li>
+
+							<li data-item-index="3" data-item-link="product/daily/438" data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/20220323/7bad52bc-f656-493c-856e-8ed41dc487dc.jpg" data-item-title="채소습관 케일" data-item-desc="1600"><input value="0072976" name="itemCode" type="hidden"> <a class="item" data-product-preview="438"> <label>목</label>
+									<div class="thumb">
+										<img src="/file/download/product/7bad52bc-f656-493c-856e-8ed41dc487dc.jpg" onerror="this.src='/resources/images/common/no_img.png'" alt="">
+									</div>
+									<div class="text-wrapper">
+										<span>채소습관 케일</span>
+									</div>
+							</a></li>
+
+							<li data-item-index="4" data-item-link="product/daily/430" data-item-image="https://mgreenjuice.pulmuone.com/file/download/product/20210923/ecc8e6be-08ba-42a0-a9f9-a620944fe11d.jpg" data-item-title="슈퍼키즈하이" data-item-desc="2000"><input value="0072840" name="itemCode" type="hidden"> <a class="item" data-product-preview="430"> <label>금</label>
+									<div class="thumb">
+										<img src="/file/download/product/ecc8e6be-08ba-42a0-a9f9-a620944fe11d.jpg" onerror="this.src='/resources/images/common/no_img.png'" alt="">
+									</div>
+									<div class="text-wrapper">
+										<span>슈퍼키즈하이</span>
+									</div>
+							</a></li>
+
+						</ul>
+					</div>
+					<div class="button-set sm" style="margin: 20px 0px">
+
+				
+							<button id="cartBtn" class="button-basic black">장바구니</button>
+						
+
+						<form action="/daily/order/step1" method="GET">
+							<c:forEach var="dto" items="${list }">
+								<input type="hidden" name="item" value='{"item":[{"itemCode":"${dto.products_no}, ${dto.products_no }","dayQty":[1,1,1,1,1]}]'>
+							</c:forEach>
+							<button id="orderBtn" class="button-basic primary">주문하기</button>
+						</form>
+					</div>
+
+				</div>
+
+			</div>
+			<div class="result-text">우리 아이를 위한 대표 어린이녹즙 슈퍼키즈하이는 유기농 케일에 사과, 오렌지 등 과일 농축액으로 맛까지 챙겼어요. 또한 면역력 증진과 함께 피부 건강에 도움을 줄 수 있다고 알려진 알로에겔이 함유되어 있답니다.</div>
+
+			<div class="button-set">
+				<button class="button-basic kakao prefix" onclick="javascript:sendKakao()">
+					<i class="ico"></i> 카카오톡으로 공유
+				</button>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="modal" id="productPreviewModal" tabindex="-1" style="display: none;" aria-modal="true">
+		<div class="modal-dialog modal-dialog-centered" style="width: 430px;">
+			<div class="modal-content modal-product"></div>
+		</div>
+	</div>
+</main>
 </html>

@@ -418,9 +418,15 @@ let timer;
     var type = that.attr("data-cart-type");
     var id = that.attr("data-cart-id");
     var eventIdx = that.attr("data-cart-event");
-    if (id && type) {
-      addCart(type, id, { eventIdx });
-    }
+//    if (id && type) {
+//      addCart(type, id, { eventIdx });
+//    }
+    axios.get('/cart/'+type+'/save?products_no='+ id).then(function ({data}) {      
+        alert("제품이 담겼습니다.");
+    }).catch(function (e) {
+      alert("서버와 연결이 올바르지 않습니다.");
+    })
+    
     e.preventDefault();
     return false;
   });
@@ -445,12 +451,12 @@ let timer;
 
     if (!window.is_signed) {
       alert("로그인 후 찜한상품으로 담을 수 있습니다.", function () {
-        location.href = "/member/login.do?redirectUrl=" + encodeURIComponent(location.href);
+        location.href = "/member/login?redirectUrl=" + encodeURIComponent(location.href);
       });
       return false;
     }
-      
-    axios.post('/product/' + type + '/interest.do?tag=' + id).then(function ({data}) {
+
+    axios.get('/product/' + type + '/interest/' + id+'?classname='+that.hasClass("active")).then(function ({data}) {
 	
 //      if (!data.ok) {
 //        return;

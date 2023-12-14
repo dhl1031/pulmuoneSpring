@@ -23,7 +23,9 @@ public class ProductsDTO {
 	   private int tag_no4;         // 태그4
 	   private int tag_no5;         // 태그5
 	   private String tags;            // 태그파라미터
-	   private int products_tag;         // 상품태그
+//	   private String ptags;            // 상품태그파라미터
+	   private String products_tag;         // 상품태그
+	   
 	   private Date reg_date;         // 등록날
 	   private String event_tag;         // 상품이벤트태그
 	   private String event_tag2;         // 상품이벤트태그
@@ -39,5 +41,10 @@ public class ProductsDTO {
 	   public String[] gettagArr() {
 		   return tags == null ? new String[] {} : this.tags.split(",");
 	   }
-	   
+	   public String[] getptagArr() {
+		   return products_tag == null ? new String[] {} : this.products_tag.split(",");
+	   }
+	   private String count;
+	   private String member_id;
+	   private boolean classname;
 }

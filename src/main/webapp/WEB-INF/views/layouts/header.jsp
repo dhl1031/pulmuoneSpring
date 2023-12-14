@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!-- header -->
@@ -65,7 +66,7 @@
                <span class="hide">로그인 페이지 / 마이 페이지로 가기</span>
             </a>
              <a href="/cart/daily">
-               <div class="counter hide" data-cart-size=""></div> <i class="ico ico-cart1"></i> <span class="hide">장바구니로 가기</span>
+               <div class="counter" data-cart-size="">${fn:length(list) }</div> <i class="ico ico-cart1"></i> <span class="hide">장바구니로 가기</span>
             </a>
          </div>
          <form class="search-area" action="/product/search">
@@ -253,6 +254,7 @@
        }, function(){
            $('.logout-btn').stop().fadeOut('500');
        });
+              
 
    });
 </script>

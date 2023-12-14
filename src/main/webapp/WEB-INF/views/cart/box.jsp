@@ -1,14 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<main class="Cart">
+	<div id="container-wrapper" class="container-wrapper">
+		<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
 
-<!DOCTYPE html>
-<html lang="ko">
-<body>
-	<main class="Cart">
-		<div id="container-wrapper" class="container-wrapper">
-			<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
-
-			<script>
+		<script>
   var nowArgs = undefined;
   window.orderProcess = function (args) {
     if (!window.is_signed) {
@@ -123,32 +120,27 @@
     }
   })
 </script>
+		<div class="modal" id="orderModal" tabindex="-1" aria-labelledby="orderModal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header" style="padding-bottom: 8px;">
+						<h5 class="modal-title" id="orderModalLabel">선택하세요</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body select-wrapper">
+						<ul class="product-content-list order">
 
-			<div class="modal" id="orderModal" tabindex="-1"
-				aria-labelledby="orderModal" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header" style="padding-bottom: 8px;">
-							<h5 class="modal-title" id="orderModalLabel">선택하세요</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close"></button>
-						</div>
-						<div class="modal-body select-wrapper">
-							<ul class="product-content-list order">
-
-							</ul>
-						</div>
-						<div class="button-set">
-							<button type="button" class="button-basic black"
-								data-type="continue">기존 주문에 상품 추가</button>
-							<button type="button" class="button-basic primary"
-								data-type="new">신규 배송지로 주문</button>
-						</div>
+						</ul>
+					</div>
+					<div class="button-set">
+						<button type="button" class="button-basic black" data-type="continue">기존 주문에 상품 추가</button>
+						<button type="button" class="button-basic primary" data-type="new">신규 배송지로 주문</button>
 					</div>
 				</div>
 			</div>
+		</div>
 
-			<script type="text/javascript">
+		<script type="text/javascript">
 	var type = "box";
 	var gap = type == 'daily' ? 4 : 1;
 
@@ -162,22 +154,25 @@
 			$(this).find("[data-count]").each(function () {
 				count += parseInt($(this).val(), 10);
 			});
-			totalCount += count;
-			originTotal += parseInt($(this).attr("data-origin-price") || $(this).attr("data-price"), 10) * count;
+			totalCount += count;			
+			
+			originTotal += parseInt($(this).attr("data-origin-price") || $(this).attr("data-price"), 10) * count;			
 			totalPrice += parseInt($(this).attr("data-price"), 10) * count;
 			deliveryPrice += parseInt($(this).attr("data-delivery-price") || "0", 10);
 		});
-
+		
+		
 		$("[data-price-view='origin']").text((originTotal * gap).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 		$("[data-price-view='product']").text((totalPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 		// $("[data-price-view='sale']").text((0 - (originTotal - totalPrice)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-		$("[data-price-view='sale']").text(((originTotal - (originTotal - totalPrice)) * gap).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+		$("[data-price-view='sale']").text(((originTotal - (originTotal - totalPrice)) * gap).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));	
 
 		// if ((originTotal - totalPrice) > 0) {
 		// 	$("[data-price-view='sale']").addClass("minus");
 		// } else {
 		// 	$("[data-price-view='sale']").removeClass("minus");
 		// }
+
 		if ((originTotal - (originTotal - totalPrice)) != originTotal) {
 			$("[data-price-view='sale']").addClass("minus");
 		} else {
@@ -298,46 +293,39 @@
 			var parent = $(this).parents(".order-item");
 			var cartIdx = $(this).attr("data-cart-idx");
 			var eventIdx = $(this).attr("data-event-idx");
-			var itemCode = $(this).attr("data-itemcode");
+			var itemCode = $(this).attr("data-itemcode");			
 			confirmDesign("", "삭제하시겠습니까?", function () {
-				var s = "&cartIdx=" + cartIdx;
-				if (!is_signed) {
-					s = "&itemCode=" + itemCode + "." + (eventIdx || "null");
-				}
-
-				newDelete({
-					url: "/cart?type=box" + s,
-				}, function () {
-					alert("삭제되었습니다.");
-					parent.remove();
+				axios.get('/cart/box/delete?products_no='+ itemCode).then(function ({data}) {      
+			        alert("삭제되었습니다.");
+			        parent.remove();
 					calculateTotalPrice();
-				});
+			    }).catch(function (e) {
+			      alert("서버와 연결이 올바르지 않습니다.");
+			    });
 			});
 		});
 
 
 		$(".deleteAll").click(function () {
-			var param = "";
+			var param = [];
 			$("[name='cartIdx']:checked").each(function () {
-				var s = "&cartIdx=" + $(this).val();
-				if (!is_signed) {
-					s = "&itemCode=" + $(this).attr("data-itemcode") + "." + ($(this).attr("data-event-idx") || "null");
-				}
-				param += s
+				var itemCode = $(this).attr("data-itemcode");				
+				param.push(itemCode)
 			});
 			if (!param) {
 				alert("선택된 상품이 없습니다.");
 				return;
 			}
-
+			
+			console.log(param);			
 			confirmDesign("", "삭제하시겠습니까?", function () {
-				newDelete({
-					url: "/cart?type=box" + param,
-				}, function () {
-					alert("삭제되었습니다.");
-					$(".order-item-list>*:has([name='cartIdx']:checked)").remove();
+				axios.get('/cart/box/delete?products_no='+ encodeURIComponent(param.join(","))).then(function ({data}) {      
+			        alert("삭제되었습니다.");
+			        $(".order-item-list>*:has([name='cartIdx']:checked)").remove();
 					calculateTotalPrice();
-				});
+			    }).catch(function (e) {
+			      alert("서버와 연결이 올바르지 않습니다.");
+			    });
 			});
 		});
 
@@ -397,179 +385,175 @@
 	})
 </script>
 
-			<div class="contents-area">
-				<div class="container">
-					<div class="location">
-						<a href="/">홈</a> <a href="/">장바구니</a>
+		<div class="contents-area">
+			<div class="container">
+				<div class="location">
+					<a href="/">홈</a> <a href="/">장바구니</a>
+				</div>
+				<div class="cont-cart-area">
+					<div class="title-tab-area">
+						<h2 class="cont-title" style="font-weight: 400">장바구니</h2>
+						<ul class="nav nav-tabs nav-justified" id="myTab-area" role="tablist">
+							<li class="nav-item" role="presentation"><a href="/cart/daily" class="nav-link " style="padding-right: 4px; margin-bottom: 0px; height: 47px"> 매일배송 </a></li>
+							<li class="nav-item" role="presentation"><a href="/cart/box" class="nav-link active" style="margin-bottom: 0px; height: 47px"> 택배배송 </a></li>
+						</ul>
 					</div>
-					<div class="cont-cart-area">
-						<div class="title-tab-area">
-							<h2 class="cont-title" style="font-weight: 400">장바구니</h2>
-							<ul class="nav nav-tabs nav-justified" id="myTab-area"
-								role="tablist">
-								<li class="nav-item" role="presentation"><a
-									href="/cart/daily" class="nav-link "
-									style="padding-right: 4px; margin-bottom: 0px; height: 47px">
-										매일배송 </a></li>
-								<li class="nav-item" role="presentation"><a
-									href="/cart/box" class="nav-link active"
-									style="margin-bottom: 0px; height: 47px"> 택배배송 </a></li>
-							</ul>
-						</div>
 
-						<div id="profile" role="tabpanel" aria-labelledby="profile-t">
-							<div class="prd-cart-area">
-								<div class="prd-cart-list-area" style="padding-top: 15px;">
-									<span>주문하실 상품과 수량을 확인하세요.</span>
-									<div data-empty-action="Y" style="display: none">
-										<div class="empty-area" style="padding: 160px 0">
-											<img src="/resources/images/ui/ico-alert.png" alt="empty">
-											<b>장바구니가 비어있습니다.</b>
-										</div>
+					<div id="profile" role="tabpanel" aria-labelledby="profile-t">
+						<div class="prd-cart-area">
+							<div class="prd-cart-list-area" style="padding-top: 15px;">
+								<span>주문하실 상품과 수량을 확인하세요.</span>
+								<div data-empty-action="Y" style="display: none">
+									<div class="empty-area" style="padding: 160px 0">
+										<img src="/resources/assets/images/ui/ico-alert.png" alt="empty"> <b>장바구니가 비어있습니다.</b>
 									</div>
-									<div data-empty-action="N">
+								</div>
+								<div data-empty-action="N">
 
-										<div class="prd-cart-all-select">
-											<div class="checkbox chk-type3">
-												<input type="checkbox" id="cartIdxAll" checked="checked">
-												<label for="cartIdxAll" style="font-weight: 300;">전체선택</label>
-											</div>
-											<button type="button" class="btn-round2 deleteAll">선택
-												삭제</button>
+									<div class="prd-cart-all-select">
+										<div class="checkbox chk-type3">
+											<input type="checkbox" id="cartIdxAll" checked="checked"> <label for="cartIdxAll" style="font-weight: 300;">전체선택</label>
 										</div>
-										
+										<button type="button" class="btn-round2 deleteAll">선택 삭제</button>
+									</div>
+
 									<c:forEach items="${list }" var="list">
-										<ul class="prd-cart-list cart-box-list order-item-list">						
-											<li class="order-item" data-len="1" data-id=""
-												data-event-idx="" data-prod-id="672" data-itemcode="${list.products_no }"
-												data-origin-price="30700" data-price="30700"
-												data-delivery-price="0" data-delivery-one-price="0"
-												data-delivery-per="" data-limit-size="-1"
-												style="padding: 20px 0 18px;">
-												<div class="prd-cart-info-area">
-												
-													<div class="flex-l">
-														<div class="checkbox chk-type3" style="margin-top: 33px">
-															<input type="checkbox" id="chk-prd-0072964"
-																name="cartIdx" value="" data-itemcode=""
-																data-event-idx="" checked="checked"> <label
-																for="chk-prd-0072964"><span class="hide">해당제품선택</span></label>
+										<ul class="prd-cart-list cart-box-list order-item-list">
+											<c:choose>
+												<c:when test="${list.event_price ne null and list.event_price > '0' }">
+													<li class="order-item" data-len="1" data-id="" data-event-idx="" data-prod-id="${list.products_tag }" data-itemcode="${list.products_no }" data-origin-price="${list.price }" data-price="${list.event_price }" data-delivery-price="0" data-delivery-one-price="0" data-delivery-per="" data-limit-size="-1" style="padding: 20px 0 18px;">
+												</c:when>
+												<c:otherwise>
+													<li class="order-item" data-len="1" data-id="" data-event-idx="" data-prod-id="${list.products_tag }" data-itemcode="${list.products_no }" data-origin-price="${list.price }" data-price="${list.price }" data-delivery-price="0" data-delivery-one-price="0" data-delivery-per="" data-limit-size="-1" style="padding: 20px 0 18px;">
+												</c:otherwise>
+											</c:choose>
+											<div class="prd-cart-info-area">
+												<div class="flex-l">
+													<div class="checkbox chk-type3" style="margin-top: 33px">
+														<input type="checkbox" id="chk-prd-${list.products_no }" name="cartIdx" value="" data-itemcode="${list.products_no }" data-event-idx="" checked="checked"> <label for="chk-prd-${list.products_no }"><span class="hide">해당제품선택</span></label>
+													</div>
+													<a class="thumb"> <img src="/file/download/product/${list.system_name }" alt="">
+													</a>
+													<div class="prd-info-select-amount">
+														<a href="/product/box/${list.products_tag}?eventIdx=" class="prd-info"> <em>${list.products_type}</em> <b class="prd-title">${list.products_name}</b> <span class="volume">(${list.products_size})</span>
+														</a> <input type="hidden" data-count="0" value="1">
+														<div class="prd-select-amount">
+															<button type="button" class="btn-minus prod-remove">
+																<span class="hide">제품 빼기</span>
+															</button>
+															<em data-itemcount-view="0">1</em>
+															<button type="button" class="prod-add">
+																+<span class="hide">제품 추가</span>
+															</button>
 														</div>
-
-														<a class="thumb"> 
-															<img src="/file/download/product/${list.system_name }"	alt="">
-														</a>
-														<div class="prd-info-select-amount">
-															<a href="/product/box/${list.products_tag }?eventIdx=" class="prd-info">
-																<em>냉장상품</em> <b class="prd-title">${list.products_name }</b> 
-															<span class="volume">(${list.products_size })</span>
-															</a>
-															<input type="hidden" data-count="0" value="1">
-
-															<div class="prd-select-amount">
-																<button type="button" class="btn-minus prod-remove">
-																	<span class="hide">제품 빼기</span>
+													</div>
+												</div>												
+												<div class="prd-cart-btn-price">
+													<div>
+														<c:choose>
+															<c:when test="${list.wish_status eq 1 }">
+																<button type="button" data-wish-type="box" data-wish-id="${list.products_tag }" class="btn-wishList active ">
+																	<i class="ico ico-wishlist"></i> <span class="hide">제품 찜하기</span>
 																</button>
-																<em data-itemcount-view="0">${list.amount}</em>
-																<button type="button" class="prod-add">
-																	+<span class="hide">제품 추가</span>
+																<button type="button" class="btn-delete btn-prd-delete" data-cart-idx="" data-event-idx="" data-itemcode="${list.products_no }">
+																	<i class="ico ico-prd-delete"></i> <span class="hide">카트에서 삭제</span>
 																</button>
+															</c:when>
+															<c:otherwise>
+																<button type="button" data-wish-type="box" data-wish-id="${list.products_tag }" class="btn-wishList ">
+																	<i class="ico ico-wishlist"></i> <span class="hide">제품 찜하기</span>
+																</button>
+																<button type="button" class="btn-delete btn-prd-delete" data-cart-idx="" data-event-idx="" data-itemcode="${list.products_no }">
+																	<i class="ico ico-prd-delete"></i> <span class="hide">카트에서 삭제</span>
+																</button>
+															</c:otherwise>
+														</c:choose>
+													</div>
+													<c:choose>
+														<c:when test="${list.event_price ne null and list.event_price > '0' }">
+															<div class="price-info">
+																<em class="before-price"> <em data-print-price="${list.price }"><fmt:formatNumber value="${list.price }" pattern="#,###" /></em> <span>원</span>
+																</em> <b class="now-price"> <b data-print-price="${list.event_price }"><fmt:formatNumber value="${list.event_price }" pattern="#,###" /></b> <span>원</span>
+																</b>
 															</div>
-														</div>
-													</div>
-													
-													<div class="prd-cart-btn-price">
-														<div>
-															<button type="button" data-wish-type="box"
-																data-wish-id="672" class="btn-wishList ">
-																<i class="ico ico-wishlist"></i>
-																	<span class="hide">제품	찜하기</span>
-															</button>
-															<button type="button" class="btn-delete btn-prd-delete"
-																data-cart-idx="" data-event-idx=""
-																data-itemcode="">
-																<i class="ico ico-prd-delete"></i> 
-																	<span class="hide">카트에서 삭제</span>
-															</button>
-														</div>
-														
-														<div class="price-info">
-															<b class="now-price"> <b data-print-price="30700">30,700 </b> <span>원</span>
-															</b>
-														</div>
-													</div>
+														</c:when>
+														<c:otherwise>
+															<div class="price-info">
+																<b class="now-price"> <b data-print-price="${list.price }"><fmt:formatNumber value="${list.price }" pattern="#,###" /></b> <span>원</span>
+																</b>
+															</div>
+														</c:otherwise>
+													</c:choose>
 												</div>
+											</div>
 											</li>
 										</ul>
 									</c:forEach>
-
-									</div>
-									<div class="cart-notice-area">
-										<b>주문 시 유의사항</b>
-										<ul class="list dot-list">
-											<li>담은 제품은 최대 50개까지 30일간 보관됩니다.</li>
-											<li>주문 시 일별 음용 수량을 수정할 수 있으며, 예상 청구 금액 확인이 가능합니다.</li>
-										</ul>
-									</div>
-									<!--S:띠배너 슬라이드-->
-
-									<div class="banner-area this-prd" style="margin-bottom: 0px">
-										<div class="banner-list">
-											<a class="item" href="/event/event/view/2" title="장바구니_친구초대"	style="background-color: #"> 
-												<img	src="/file/download/banner/5944914d-b8f7-4d8d-90fc-e1cea9cb2d93.png"	alt="">
-											</a>
-										</div>
-									</div>
-
-									<!--E:띠배너 슬라이드-->
 								</div>
-								<div class="prd-checkout-area">
-									<dl>
-										<dt class="list-head">
-											<em class="count">선택한 상품 <span data-count-view="item">1</span>개
-											</em>
-										</dt>
-										<dd>
-											<span>상품 판매가 </span> <b>
-												<div class="now-price">
-													<b data-price-view="origin">30,700</b> <span>원</span>
-												</div>
-											</b>
-										</dd>
-										<dd>
-
-											<span>상품 할인 판매가</span> <b>
-												<div class="now-price">
-													<b data-price-view="sale" class="">30,700</b> <span>원</span>
-												</div>
-											</b>
-										</dd>
-
-										<dd>
-											<span>배송비</span> <b>
-												<div class="now-price">
-													<b data-price-view="delivery">0</b> <span>원</span>
-												</div>
-											</b>
-										</dd>
-
-										<dd class="checkout-sum">
-											<span>주문금액</span> <b>
-												<div class="now-price">
-													<b data-price-view="total">30,700</b> <span>원</span>
-												</div>
-											</b>
-										</dd>
-
-									</dl>
-									<button type="button" id="allOrderBtn" class="btn-default">주문하기</button>
+								<div class="cart-notice-area">
+									<b>주문 시 유의사항</b>
+									<ul class="list dot-list">
+										<li>담은 제품은 최대 50개까지 30일간 보관됩니다.</li>
+										<li>주문 시 일별 음용 수량을 수정할 수 있으며, 예상 청구 금액 확인이 가능합니다.</li>
+									</ul>
 								</div>
+								<!--S:띠배너 슬라이드-->
+
+								<div class="banner-area this-prd" style="margin-bottom: 0px">
+									<div class="banner-list">
+										<a class="item" href="/event/event/view/2" title="장바구니_친구초대" style="background-color: #"> <img src="/file/download/banner/5944914d-b8f7-4d8d-90fc-e1cea9cb2d93.png" alt="">
+										</a>
+									</div>
+								</div>
+
+								<!--E:띠배너 슬라이드-->
+							</div>
+							<div class="prd-checkout-area">
+								<dl>
+									<dt class="list-head">
+										<em class="count">선택한 상품 <span data-count-view="item">0</span>개
+										</em>
+									</dt>
+									<dd>
+										<span>상품 판매가 </span> <b>
+											<div class="now-price">
+												<b data-price-view="origin">0</b> <span>원</span>
+											</div>
+										</b>
+									</dd>
+									<dd>
+
+										<span>상품 할인 판매가</span> <b>
+											<div class="now-price">
+												<b data-price-view="sale" class="">0</b> <span>원</span>
+											</div>
+										</b>
+									</dd>
+
+									<dd>
+										<span>배송비</span> <b>
+											<div class="now-price">
+												<b data-price-view="delivery">0</b> <span>원</span>
+											</div>
+										</b>
+									</dd>
+
+									<dd class="checkout-sum">
+										<span>주문금액</span> <b>
+											<div class="now-price">
+												<b data-price-view="total">0</b> <span>원</span>
+											</div>
+										</b>
+									</dd>
+
+								</dl>
+								<button type="button" id="allOrderBtn" class="btn-default">주문하기</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</main>
-</body>
+	</div>
+</main>
 </html>

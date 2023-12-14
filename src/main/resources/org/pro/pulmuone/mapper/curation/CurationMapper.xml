@@ -4,6 +4,7 @@
 
 <mapper namespace="org.pro.pulmuone.mapper.curation.CurationMapper">
 
+
    <!-- 키즈 프로그램 -->
    <select id="kids" resultType="org.pro.pulmuone.domain.curation.KidsVO">
       SELECT kids_product_no, program_no, pi.img_no, program_name, dayweek, pi.products_no, p.products_name, program_content,
@@ -51,6 +52,7 @@
       </if>      
       ORDER BY curation_no
    </select>
+
 
 
 </mapper>

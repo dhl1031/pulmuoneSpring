@@ -10,6 +10,11 @@
 			#{tags}
 		</foreach>
 	</sql>
+	<sql id="products_tag">
+		<foreach collection="ptagArr" item="products_tag" open="(" separator="," close=")">
+			#{products_tag}
+		</foreach>
+	</sql>
 	<select id="search" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
 		SELECT products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price, products_size, delivery_type
 		, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name, event_tag, event_tag2, wish_status
@@ -43,6 +48,7 @@
 		) b
 		WHERE b.no BETWEEN #{pageNo} AND #{pageNo2}
 	</select>
+
 	<select id="searchcount" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
 		select a.products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price, products_size, delivery_type
 		, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name, event_tag, event_tag2, wish_status
@@ -68,6 +74,7 @@
 			)
 		</if>
 	</select>
+
 	<!-- List<ProductsDTO> best(); -->
 	<select id="best" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
 		select a.products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price, products_size, delivery_type
@@ -88,6 +95,7 @@
 			and category_no = #{category_no}
 		</if>
 	</select>
+
 	<select id="view" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
 		select a.products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price, products_size, delivery_type
 		, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name,origin_name, event_tag, event_tag2, wish_status
@@ -95,4 +103,46 @@
 		where products_tag = #{products_tag}
 		and origin_name like 'View%'
 	</select>
+
+	<insert id="wishinsert">
+		<if test='classname == false '>
+			INSERT INTO products_wish
+			select products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price, products_size, delivery_type
+			, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, SYSDATE, event_tag, event_tag2, #{member_id}, seq_wish.NEXTVAL
+			from products , member
+			WHERE products_tag in
+			<include refid="products_tag"></include>
+			and member_id = #{member_id}
+		</if>
+	</insert>
+
+	<update id="wishupdate">
+		<if test='classname == true '>
+			UPDATE products
+			set wish_status = 0
+			WHERE products_tag in
+			<include refid="products_tag"></include>
+		</if>
+		<if test='classname == false '>
+			UPDATE products
+			set wish_status = 1
+			WHERE products_tag in
+			<include refid="products_tag"></include>
+		</if>
+	</update>
+
+	<delete id="wishdelete">
+		DELETE FROM products_wish
+		where products_tag in
+		<include refid="products_tag"></include>
+		and member_id = #{member_id}
+	</delete>
+	<select id="wishlist" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
+		select a.products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price
+		, products_size, delivery_type, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name, event_tag, event_tag2, member_id, idx
+		from products_wish a join products_img b on a.products_no = b.products_no
+		where origin_name not like 'View%'
+		and member_id = #{member_id}
+	</select>
+
 </mapper>

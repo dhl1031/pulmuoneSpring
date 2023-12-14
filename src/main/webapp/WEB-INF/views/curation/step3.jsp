@@ -5,17 +5,17 @@
 
 <style>
 .question-section>div {
-   display: none;
+	display: none;
 }
 
 .question-section>div.active {
-   display: block;
+	display: block;
 }
 </style>
 <body>
 
 
-   <script>
+	<script>
    function getBmi (w,h){
       return (w / ((h * h) / 10000)).toFixed(2);
    }
@@ -103,6 +103,7 @@
    
         $('.next-btn').click(function (){
             const lastSection = $('.last-page-section')
+
          if (lastSection.css('display') !== 'none') {
             const singleYn = lastSection.find('input[type=radio]:checked').val();
             
@@ -128,6 +129,7 @@
                + score
                + '?singleYn=' + singleYn 
                + '&bmi=' + bmi;
+
 
          }
                
@@ -161,201 +163,226 @@
 </script>
 
 
-   <div class="wrapper">
-      <main class="step3">
-         <div class="breadcrumb-style">
-            <div class="container">
-               <div class="container">
-                  <ul>
-                     <li><a>홈</a></li>
-                     <li><a class="active">맞춤큐레이션</a></li>
-                  </ul>
-               </div>
-            </div>
-         </div>
-         <form class="curation">
-            <div class="container curation">
-               <div class="curation-progress-bar">
-                  <ul>
-                     <li class="active"><b>01.</b>건강목표</li>
-                     <li class="active"><b>02.</b>식이섭취</li>
-                     <li class="active"><b>03.</b>생활습관</li>
-                  </ul>
-               </div>
-               <div class="question-part">
-                  <div class="title">
-                     <h3>자신에게 해당하는 생활습관을 선택하세요.</h3>
-                     <div class="sm-progress-bar">
-                        <label class="progress-bar">12.5%</label> <span class="fill" data-progress-fill style="width: 12.5%"></span>
-                     </div>
-                  </div>
-                  <div class="question-section">
 
-                     <div class="active" data-i="0" id="q-7">
-                        <div class="card-item">
-                           <span class="mark">Q.</span>
-                           <h4>아침 식사를 거른다</h4>
-                           <div class="answer-btn-wrapper">
-                              <button value="0" class="positive-btn button-basic border" type="button">예</button>
-                              <button value="1" class="negative-btn button-basic border" type="button">아니오</button>
-                           </div>
-                        </div>
-                     </div>
+	<div class="wrapper">
+		<main class="step3">
+			<div class="breadcrumb-style">
+				<div class="container">
+					<div class="container">
+						<ul>
+							<li><a>홈</a></li>
+							<li><a class="active">맞춤큐레이션</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<form class="curation">
+				<div class="container curation">
+					<div class="curation-progress-bar">
+						<ul>
+							<li class="active"><b>01.</b>건강목표</li>
+							<li class="active"><b>02.</b>식이섭취</li>
+							<li class="active"><b>03.</b>생활습관</li>
+						</ul>
+					</div>
+					<div class="question-part">
+						<div class="title">
+							<h3>자신에게 해당하는 생활습관을 선택하세요.</h3>
+							<div class="sm-progress-bar">
+								<label class="progress-bar">12.5%</label> <span class="fill" data-progress-fill style="width: 12.5%"></span>
+							</div>
+						</div>
+						<div class="question-section">
 
-                     <div class="active" data-i="1" id="q-8">
-                        <div class="card-item">
-                           <span class="mark">Q.</span>
-                           <h4>식사 시간이 불규칙하다</h4>
-                           <div class="answer-btn-wrapper">
-                              <button value="0" class="positive-btn button-basic border" type="button">예</button>
-                              <button value="1" class="negative-btn button-basic border" type="button">아니오</button>
-                           </div>
-                        </div>
-                     </div>
 
-                     <div class="active" data-i="2" id="q-9">
-                        <div class="card-item">
-                           <span class="mark">Q.</span>
-                           <h4>야식하는 습관이 있다</h4>
-                           <div class="answer-btn-wrapper">
-                              <button value="0" class="positive-btn button-basic border" type="button">예</button>
-                              <button value="1" class="negative-btn button-basic border" type="button">아니오</button>
-                           </div>
-                        </div>
-                     </div>
 
-                     <div class="active" data-i="3" id="q-10">
-                        <div class="card-item">
-                           <span class="mark">Q.</span>
-                           <h4>배가 불러도 더 먹는다</h4>
-                           <div class="answer-btn-wrapper">
-                              <button value="0" class="positive-btn button-basic border" type="button">예</button>
-                              <button value="1" class="negative-btn button-basic border" type="button">아니오</button>
-                           </div>
-                        </div>
-                     </div>
+							<div class="active" data-i="0" id="q-7">
+								<div class="card-item">
+									<span class="mark">Q.</span>
+									<h4>아침 식사를 거른다</h4>
+									<div class="answer-btn-wrapper">
+										<button value="0" class="positive-btn button-basic border" type="button">예</button>
+										<button value="1" class="negative-btn button-basic border" type="button">아니오</button>
+									</div>
+								</div>
+							</div>
 
-                     <div class="active" data-i="4" id="q-11">
-                        <div class="card-item">
-                           <span class="mark">Q.</span>
-                           <h4>일주일에 2회 이상은 과음한다</h4>
-                           <div class="answer-btn-wrapper">
-                              <button value="0" class="positive-btn button-basic border" type="button">예</button>
-                              <button value="1" class="negative-btn button-basic border" type="button">아니오</button>
-                           </div>
-                        </div>
-                     </div>
 
-                     <div class="active" data-i="5" id="q-12">
-                        <div class="card-item">
-                           <span class="mark">Q.</span>
-                           <h4>식사할 때 반주하는 습관이 있다</h4>
-                           <div class="answer-btn-wrapper">
-                              <button value="0" class="positive-btn button-basic border" type="button">예</button>
-                              <button value="1" class="negative-btn button-basic border" type="button">아니오</button>
-                           </div>
-                        </div>
-                     </div>
 
-                     <div class="active" data-i="6" id="q-13">
-                        <div class="card-item">
-                           <span class="mark">Q.</span>
-                           <h4>흡연을 한다</h4>
-                           <div class="answer-btn-wrapper">
-                              <button value="0" class="positive-btn button-basic border" type="button">예</button>
-                              <button value="1" class="negative-btn button-basic border" type="button">아니오</button>
-                           </div>
-                        </div>
-                     </div>
+							<div class="active" data-i="1" id="q-8">
+								<div class="card-item">
+									<span class="mark">Q.</span>
+									<h4>식사 시간이 불규칙하다</h4>
+									<div class="answer-btn-wrapper">
+										<button value="0" class="positive-btn button-basic border" type="button">예</button>
+										<button value="1" class="negative-btn button-basic border" type="button">아니오</button>
+									</div>
+								</div>
+							</div>
 
-                     <div class="active" data-i="7" id="q-14">
-                        <div class="card-item">
-                           <span class="mark">Q.</span>
-                           <h4>운동을 안하거나, 권고 지침 수준보다는 적게 운동 한다</h4>
-                           <div class="answer-btn-wrapper">
-                              <button value="0" class="positive-btn button-basic border" type="button">예</button>
-                              <button value="1" class="negative-btn button-basic border" type="button">아니오</button>
-                           </div>
-                        </div>
-                     </div>
 
-                  </div>
-               </div>
-               <div style="display: none" class="last-page-section question-part">
-                  <div class="title">
-                     <h3>
-                        모든 설문을 작성하셨습니다.<br /> 결과를 확인하세요.
-                     </h3>
-                  </div>
-                  <div class="card-item">
-                     <p>희망하는 추천 방식을 선택해주세요</p>
-                     <div class="result-select-group">
-                        <label class="package" for="package"> <input checked name="singleYn" id="package" type="radio" value="N">
-                           <div>
-                              <div class="check"></div>
-                              <span><b>내게 맞는 프로그램</b>을<br />추천 받습니다.</span>
-                           </div>
-                        </label> <label class="single" for="single"> <input name="singleYn" id="single" type="radio" value="Y">
-                           <div>
-                              <div class="check"></div>
-                              <span><b>내게 맞는 상품</b>을<br />추천 받습니다.</span>
-                           </div>
-                        </label>
-                     </div>
-                  </div>
 
-               </div>
-               <div data-showdesc="5" class="alert-area" style="display: none;">
-                  <h4>과음의 기준</h4>
-                  <ul>
-                     <li>맥주로는 남자 5캔, 여자 3캔 이상 섭취</li>
-                  </ul>
-               </div>
-               <div data-showdesc="8" class="alert-area" style="display: none;">
-                  <h4>한국인 신체활동 지침</h4>
-                  <ul>
-                     <li>중강도 운동 시 일주일에 총 2시간 30분 이상 실시(빨리 걷기, 자전거 타기 등)</li>
-                     <li>고강도 운동 시 일주일에 총 1시간 15분 이상 실시 (등산, 조깅, 줄넘기, 수영 시합 등).</li>
-                  </ul>
-               </div>
-               <div class="button-set w220">
-                  <button class="prev-btn button-basic border" type="button" id="prevPage">이전으로</button>
-                  <button class="next-btn button-basic primary" type="button" id="nextPage">다음으로</button>
-               </div>
+							<div class="active" data-i="2" id="q-9">
+								<div class="card-item">
+									<span class="mark">Q.</span>
+									<h4>야식하는 습관이 있다</h4>
+									<div class="answer-btn-wrapper">
+										<button value="0" class="positive-btn button-basic border" type="button">예</button>
+										<button value="1" class="negative-btn button-basic border" type="button">아니오</button>
+									</div>
+								</div>
+							</div>
 
-               <div class="modal fade show" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-modal="true" role="dialog" style="display: hidden;">
-                  <div class="modal-dialog modal-dialog-centered">
-                     <div class="modal-content">
-                        <div class="modal-header">
-                           <h5 class="modal-title" id="alertModalLabel"></h5>
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">예, 아니오 중 선택해 주세요.</div>
-                        <button type="button" class="modal-footer" data-dismiss="modal">확인</button>
-                     </div>
-                  </div>
-               </div>
 
-               <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                     <div class="modal-content">
-                        <div class="modal-header">
-                           <h5 class="modal-title" id="confirmModalLabel"></h5>
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body"></div>
-                        <div class="modal-footer">
-                           <button type="button" class="cancel" data-dismiss="modal">취소</button>
-                           <button type="button" class="confirm">확인</button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
 
-            </div>
-         </form>
+							<div class="active" data-i="3" id="q-10">
+								<div class="card-item">
+									<span class="mark">Q.</span>
+									<h4>배가 불러도 더 먹는다</h4>
+									<div class="answer-btn-wrapper">
+										<button value="0" class="positive-btn button-basic border" type="button">예</button>
+										<button value="1" class="negative-btn button-basic border" type="button">아니오</button>
+									</div>
+								</div>
+							</div>
 
-      </main>
-   </div>
+
+
+							<div class="active" data-i="4" id="q-11">
+								<div class="card-item">
+									<span class="mark">Q.</span>
+									<h4>일주일에 2회 이상은 과음한다</h4>
+									<div class="answer-btn-wrapper">
+										<button value="0" class="positive-btn button-basic border" type="button">예</button>
+										<button value="1" class="negative-btn button-basic border" type="button">아니오</button>
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="active" data-i="5" id="q-12">
+								<div class="card-item">
+									<span class="mark">Q.</span>
+									<h4>식사할 때 반주하는 습관이 있다</h4>
+									<div class="answer-btn-wrapper">
+										<button value="0" class="positive-btn button-basic border" type="button">예</button>
+										<button value="1" class="negative-btn button-basic border" type="button">아니오</button>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="active" data-i="6" id="q-13">
+								<div class="card-item">
+									<span class="mark">Q.</span>
+									<h4>흡연을 한다</h4>
+									<div class="answer-btn-wrapper">
+										<button value="0" class="positive-btn button-basic border" type="button">예</button>
+										<button value="1" class="negative-btn button-basic border" type="button">아니오</button>
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="active" data-i="7" id="q-14">
+								<div class="card-item">
+									<span class="mark">Q.</span>
+									<h4>운동을 안하거나, 권고 지침 수준보다는 적게 운동 한다</h4>
+									<div class="answer-btn-wrapper">
+										<button value="0" class="positive-btn button-basic border" type="button">예</button>
+										<button value="1" class="negative-btn button-basic border" type="button">아니오</button>
+									</div>
+								</div>
+							</div>
+
+
+
+						</div>
+					</div>
+					<div style="display: none" class="last-page-section question-part">
+						<div class="title">
+							<h3>
+								모든 설문을 작성하셨습니다.<br /> 결과를 확인하세요.
+							</h3>
+						</div>
+						<div class="card-item">
+							<p>희망하는 추천 방식을 선택해주세요</p>
+							<div class="result-select-group">
+								<label class="package" for="package"> <input checked name="singleYn" id="package" type="radio" value="N">
+									<div>
+										<div class="check"></div>
+										<span><b>내게 맞는 프로그램</b>을<br />추천 받습니다.</span>
+									</div>
+								</label> <label class="single" for="single"> <input name="singleYn" id="single" type="radio" value="Y">
+									<div>
+										<div class="check"></div>
+										<span><b>내게 맞는 상품</b>을<br />추천 받습니다.</span>
+									</div>
+								</label>
+							</div>
+						</div>
+
+
+
+					</div>
+					<div data-showdesc="5" class="alert-area" style="display: none;">
+						<h4>과음의 기준</h4>
+						<ul>
+							<li>맥주로는 남자 5캔, 여자 3캔 이상 섭취</li>
+						</ul>
+					</div>
+					<div data-showdesc="8" class="alert-area" style="display: none;">
+						<h4>한국인 신체활동 지침</h4>
+						<ul>
+							<li>중강도 운동 시 일주일에 총 2시간 30분 이상 실시(빨리 걷기, 자전거 타기 등)</li>
+							<li>고강도 운동 시 일주일에 총 1시간 15분 이상 실시 (등산, 조깅, 줄넘기, 수영 시합 등).</li>
+						</ul>
+					</div>
+					<div class="button-set w220">
+						<button class="prev-btn button-basic border" type="button" id="prevPage">이전으로</button>
+						<button class="next-btn button-basic primary" type="button" id="nextPage">다음으로</button>
+					</div>
+
+
+
+					<div class="modal fade show" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-modal="true" role="dialog" style="display: hidden;">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="alertModalLabel"></h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">예, 아니오 중 선택해 주세요.</div>
+								<button type="button" class="modal-footer" data-dismiss="modal">확인</button>
+							</div>
+						</div>
+					</div>
+
+
+
+					<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="confirmModalLabel"></h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body"></div>
+								<div class="modal-footer">
+									<button type="button" class="cancel" data-dismiss="modal">취소</button>
+									<button type="button" class="confirm">확인</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</form>
+
+		</main>
+	</div>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <head>
 <meta charset="UTF-8">
 <title>풀무원 녹즙</title>
@@ -33,15 +34,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="/resources/assets/js/daterangepicker.js"></script>
 <script type="text/javascript">
-<c:choose>
-<c:when test="${ auth.getName() eq null }">
+<sec:authorize access="isAnonymous()">
 window.is_signed = false;
-</c:when>
-<c:otherwise>
+</sec:authorize>
+<sec:authorize access="isAuthenticated()">
 window.is_signed = true;
-window.kakaoSimpleData = {"memberId":"${ auth.getMemberId() }","name":"${auth.getName()}","recommenderCode":"XQNGV"};
-</c:otherwise>
-</c:choose>
+window.kakaoSimpleData = {"memberId":"<sec:authentication property='principal.member.memberId' />","name":"<sec:authentication property='principal.member.name' />","recommenderCode":"XQNGV"};
+</sec:authorize>
 </script>
 <script>
 	window.dataLayer = window.dataLayer || [];

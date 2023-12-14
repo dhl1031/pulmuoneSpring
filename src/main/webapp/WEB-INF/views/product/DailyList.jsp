@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <script type="text/javascript">
 	var category_no = "${param.category}";
 	$(document).on(
@@ -51,6 +52,41 @@
 			$("#confirmModal").addClass('show');
 		});
 	});
+	// 	  $(document).on("click", "[data-wish-type][data-wish-id]", function (e) {
+	// 		    var that = $(this);
+	// 		    var type = that.attr("data-wish-type");
+	// 		    var id = that.attr("data-wish-id");		    
+	// 		    if (!window.is_signed) {
+	// 		      alert("로그인 후 찜한상품으로 담을 수 있습니다.", function () {
+	// 		        location.href = "/member/login?redirectUrl=" + encodeURIComponent(location.href);
+	// 		      });
+	// 		      return false;
+	// 		    }
+	// 			$.ajax({
+	// 				url: "/product/daily/interest/"+id,
+	// 				dataType: "json",	
+	// 				type: "POST",
+	// 				data: id,
+	// 				cache: false,
+	// 				success: function(data, textStatus, jqXHR){
+	// 				      if (!that.hasClass("active")) {
+	// 					        $("[data-wish-type][data-wish-id='" + id + "']").addClass('active');
+	// 					        alert("찜한상품에 담겼습니다.");
+	// 					      } else {
+	// 					        $("[data-wish-type][data-wish-id='" + id + "']").removeClass('active');
+	// 					        alert("찜한상품이 해제되었습니다.");
+	// 					      }
+	// 				},
+	// 				error: function(){
+	// 					console.log("error!");
+	// 				}
+	// 			});
+
+	// 		    // addCarts(type, id, {});
+
+	// 		    e.preventDefault();
+	// 		    return false;
+	// 		  });
 </script>
 <div id="container-wrapper" class="container-wrapper">
 	<!--S: 메인 비주얼-->
@@ -138,7 +174,7 @@
 											</div>
 										</a>
 										<div class="btn-area btn-area-center">
-											<c:if test="${ auth.getName() ne null }">
+											<sec:authorize access="isAuthenticated()">
 												<c:choose>
 													<c:when test="${dto.wish_status eq 1 }">
 														<button type="button" data-wish-id="${dto.products_tag }" data-wish-type="daily" class="btn-round btn-white wishlistBtn active ">
@@ -157,15 +193,15 @@
 														</button>
 													</c:otherwise>
 												</c:choose>
-											</c:if>
-											<c:if test="${ auth.getName() eq null }">
+											</sec:authorize>
+											<sec:authorize access="isAnonymous()">
 												<button type="button" data-wish-id="${dto.products_tag }" data-wish-type="daily" class="btn-round btn-white wishlistBtn ">
 													<i class="ico ico-prd-wish"></i> <span class="hide">제품 찜하기</span>
 												</button>
 												<button type="button" data-cart-id="${dto.products_no }" data-cart-type="daily" data-cart-event="" class="btn-round addCartBtn">
 													<i class="ico ico-prd-cart"></i> <span class="hide">장바구니에 담기</span>
 												</button>
-											</c:if>
+											</sec:authorize>
 										</div>
 									</div>
 								</div>
@@ -307,7 +343,7 @@
 										</div>
 									</a>
 									<div class="btn-area btn-area-center">
-										<c:if test="${ auth.getName() ne null }">
+										<sec:authorize access="isAuthenticated()">
 											<c:choose>
 												<c:when test="${dto.wish_status eq 1 }">
 													<button type="button" data-wish-id="${dto.products_tag }" data-wish-type="daily" class="btn-round btn-white wishlistBtn active ">
@@ -326,15 +362,15 @@
 													</button>
 												</c:otherwise>
 											</c:choose>
-										</c:if>
-										<c:if test="${ auth.getName() eq null }">
+										</sec:authorize>
+										<sec:authorize access="isAnonymous()">
 											<button type="button" data-wish-id="${dto.products_tag }" data-wish-type="daily" class="btn-round btn-white wishlistBtn ">
 												<i class="ico ico-prd-wish"></i> <span class="hide">제품 찜하기</span>
 											</button>
 											<button type="button" data-cart-id="${dto.products_no }" data-cart-type="daily" data-cart-event="" class="btn-round addCartBtn">
 												<i class="ico ico-prd-cart"></i> <span class="hide">장바구니에 담기</span>
 											</button>
-										</c:if>
+										</sec:authorize>
 									</div>
 								</div>
 							</c:forEach>

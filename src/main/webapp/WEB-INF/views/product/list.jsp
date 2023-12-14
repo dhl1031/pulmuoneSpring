@@ -21,8 +21,9 @@
 			const idx = $(this).data('idx');
 			const tag = $(this).data('tag');
 			const el = $(this)
+			
 			confirmDesign("","찜한상품을 삭제하시겠습니까?",function(){
-			  $.post("/mypage/product/delete.do?idx="+idx+"&tag="+tag,) 						
+			  $.get("/mypage/product/delete?tag="+tag,) 						
 			  .done(function(data){
 				  alert('목록에서 삭제되었습니다', () => location.reload())
 			  })
@@ -36,10 +37,11 @@
 			if (checked.length === 0) {
 				return alert('선택된 상품이 없습니다.');
 			}
-			const idxes = checked.map((i, v) => $(v).closest('li').data('idx')).toArray();
-			const tags = checked.map((i, v) => $(v).closest('li').data('tag')).toArray();
+			const idx = checked.map((i, v) => $(v).closest('li').data('idx')).toArray();
+			const tag = checked.map((i, v) => $(v).closest('li').data('tag')).toArray();
+			
 			confirmDesign("","찜한상품을 삭제하시겠습니까?",function(){
-				  $.post("/mypage/product/delete.do?idx="+idxes+"&tag="+tags,) 						
+				  $.get("/mypage/product/delete?tag="+encodeURIComponent(tag.join(",")),) 						
 				  .done(function(data){
 					  alert('목록에서 삭제되었습니다', () => location.reload())
 				  })
@@ -98,9 +100,9 @@
 						<c:forEach items="${wishlist }" var="dto">
 							<li data-idx="${dto.idx }" data-tag="${dto.products_tag}"><label class="item-wrapper"> <input name="chk-prd1" type="checkbox">
 									<div class="item">
-										<a data-url="/product/daily/view.do?tag=${dto.products_tag }&eventIdx=" onclick="event.preventDefault();hrefMove(this)" data-issale="Y" style="display: flex">
+										<a data-url="/product/${dto.delivery_type}/${dto.products_tag }?eventIdx=" onclick="event.preventDefault();hrefMove(this)" data-issale="Y" style="display: flex">
 											<div class="thumb">
-												<img src="/file/download//product/${dto.system_name }" alt="">
+												<img src="/file/download/product/${dto.system_name }" alt="">
 											</div>
 											<div class="contents">
 												<p class="prd-title">${dto.products_name }</p>

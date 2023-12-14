@@ -37,6 +37,10 @@ public class CurationVO {
 	private int thu_cnt;    
 	private int fir_cnt;   
 	private String reg_date;
+
+	
+
 	private String singleyn;
+
 }
 
