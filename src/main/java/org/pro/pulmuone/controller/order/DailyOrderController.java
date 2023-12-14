@@ -1,10 +1,8 @@
 package org.pro.pulmuone.controller.order;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.order.daily.DailyItemInfoDTO;
@@ -74,8 +72,6 @@ public class DailyOrderController {
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		} // try
 
 
@@ -99,17 +95,67 @@ public class DailyOrderController {
 	
 	
 	@PostMapping("step2")
- 	public String step2(@RequestParam Map<String, Object> allParameters, Model model) {
+ 	public String step2(Model model) {
 		log.info("> BoxOrderController.step2 ...");
 		
+		// 1. member_no 가져오기
+		// 현재 사용자의 인증 정보 가져오기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+				
+		String username = "";
+		// 사용자 id 가져오기
+		   if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+		   	UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		       username = userDetails.getUsername();
+		   } // if
+			    
+		        // member_no 저장
+		        OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
+				int member_no = member.getMember_no();
+				
+				
+		/*
 		Iterator<String> ir = allParameters.keySet().iterator();
 		while (ir.hasNext()) {
 			String string = (String) ir.next();
 			System.out.println(string);
 			System.out.println(allParameters.get(string));
 		} // while
+		*/
 		
-		return "order/box/step2.tiles";
+		/*
+		_csrf d809c29c-b3c4-4bad-87dc-ef09b584865e
+		price
+		salePrice
+		discountPrice
+		shppingPrice 0
+		payPrice 
+		payMethod 0
+		chk-same on
+		receiver 임재석
+		tel 010-1234-1234
+		zipCode 06734
+		orderStreetAddress
+		addrRoad 서울 서초구 남부순환로347길 23
+		addrDetail 4층
+		orderMemo 사무실
+		prtnName
+		estCd
+		officePhoneNumber
+		deliveryDate 2023. 12. 16
+		cardNumber
+		birthDay
+		validYYMM
+		input01 임재석
+		bankCode
+		fdCustId
+		cmsId
+		accountNumber
+		chk-agree-condition on
+		*/
+		
+		
+		return "order/daily/step2.tiles";
 	}
 
 }
