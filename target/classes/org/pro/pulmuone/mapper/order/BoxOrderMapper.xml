@@ -27,4 +27,72 @@
 	     ]]>
      </select>
      
+     <!-- int insertBoxOrder(@Param("boxOrderDTO") BoxOrderDTO boxOrderDTO); -->
+     <insert id="insertBoxOrder">
+	    <selectKey keyProperty="boxOrderDTO.box_order_no" resultType="Integer" order="BEFORE">
+	        SELECT seq_box_order.NEXTVAL
+	        FROM dual
+	    </selectKey>
+     	INSERT INTO box_order (box_order_no, member_no, box_order_status, box_order_date)
+     	VALUES (#{ boxOrderDTO.box_order_no }, #{ boxOrderDTO.member_no }, #{ boxOrderDTO.box_order_status }, #{ boxOrderDTO.box_order_date })
+     </insert>
+     
+    <!-- int insertBoxOrderProducts(@Param("boxOrderProductsList") List<BoxOrderProductsDTO> boxOrderProductsList, @Param("boxOrderNo") int boxOrderNo); -->
+	<insert id="insertBoxOrderProducts">
+		<foreach collection="boxOrderProductsList" item="dto" index="index">
+			INSERT INTO box_order_products (box_order_no, products_no, products_cnt)
+			VALUES (#{boxOrderNo}, #{dto.products_no}, ${dto.products_cnt})
+		</foreach>
+	</insert>
+
+    <!-- int insertBoxPay(@Param("boxPayDTO") BoxPayDTO boxPayDTO -->
+	<insert id="insertBoxPay" parameterType="org.pro.pulmuone.domain.order.box.BoxPayDTO">
+		<selectKey keyProperty="boxPayDTO.box_pay_no" resultType="Integer" order="BEFORE">
+     		SELECT seq_box_pay.NEXTVAL
+     		FROM dual
+     	</selectKey>
+		INSERT INTO box_pay (box_pay_no, box_order_no, box_pay_datetime, box_price, box_sale_price, box_discount_price, box_shipping_fee, box_final_price, box_pay_method, box_pay_status)
+		VALUES (#{boxPayDTO.box_pay_no}, #{boxPayDTO.box_order_no}, SYSDATE, #{boxPayDTO.box_price}
+					, #{boxPayDTO.box_sale_price}, #{boxPayDTO.box_discount_price}, #{boxPayDTO.box_shipping_fee}
+					, #{boxPayDTO.box_final_price}, #{boxPayDTO.box_pay_method}, #{boxPayDTO.box_pay_status})
+	</insert>
+	
+	<!-- int insertBoxShip(@Param("boxShipDTO") BoxShipDTO boxShipDTO); -->
+	<insert id="insertBoxShip" parameterType="org.pro.pulmuone.domain.order.box.BoxShipDTO">
+		INSERT INTO box_ship (box_order_no, box_receiver, box_tel, box_zip_code, box_addr, box_addr_detail, box_memo)
+		VALUES (#{boxShipDTO.box_order_no}, #{boxShipDTO.box_receiver}, #{boxShipDTO.box_tel}
+					, #{boxShipDTO.box_zip_code}, #{boxShipDTO.box_addr}, #{boxShipDTO.box_addr_detail}, #{boxShipDTO.box_memo})
+	</insert>
+	
+	<!-- int insertAddrBook(AddrBookDTO addrBookDTO); -->
+	<insert id="insertAddrBook">
+		INSERT INTO addr_book (addr_no, member_no, addr_name, name, tel, dest, zip_code, addr, addr_detail, memo, default_addr)
+		VALUES (seq_addr_book.NEXTVAL, #{ addrBookDTO.member_no }, #{ addrBookDTO.addr_name }, #{ addrBookDTO.name }
+					, #{ addrBookDTO.tel }, #{ addrBookDTO.dest }, #{ addrBookDTO.zip_code }, #{ addrBookDTO.addr }
+					, #{ addrBookDTO.addr_detail }, #{ addrBookDTO.memo }, #{ addrBookDTO.default_addr })
+	</insert>
+	
+	<!-- int updateHaveCoupon(@Param("couponList") List<HaveCouponDTO> couponList, @Param("member_no") int member_no, @Param("box_pay_no") int box_pay_no); -->
+	<update id="updateHaveCoupon">
+		UPDATE have_coupon
+		SET used = 1, box_pay_no = #{ box_pay_no }
+		WHERE member_no = #{ member_no } AND coupon_no IN
+		<foreach collection="couponList" item="coupon" open="(" separator="," close=")">
+			#{ coupon.coupon_no }
+		</foreach>
+	</update>
+	
+	<!-- BoxItemInfoDTO getBoxItemInfo(List<BoxOrderProductsDTO> boxOrderProductsList); -->
+	<select id="getBoxItemInfo" resultType="org.pro.pulmuone.domain.order.box.BoxItemInfoDTO">
+     	SELECT p.products_no, products_name, products_size, products_type, price, event_price, img_path, system_name
+     	FROM products p LEFT JOIN products_img i ON p.products_no = i.products_no
+     	<where>
+	     	<foreach collection="boxOrderProductsList" item="prd" open="p.products_no IN (" separator="," close=")">
+	     		#{prd.products_no}
+	     	</foreach>
+	     	AND origin_name != 'View.png'
+	    </where>
+     	ORDER BY p.products_no
+	</select>
+
 </mapper>

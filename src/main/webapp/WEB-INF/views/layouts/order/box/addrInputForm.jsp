@@ -24,7 +24,7 @@
 				<label for="receiver">받으시는분</label>
 			</dt>
 			<dd>
-				<input type="text" id="receiver" name="orderName" placeholder="이름을 입력하세요" value="${ member.name }" maxlength="10">
+				<input type="text" id="receiver" name="box_receiver" placeholder="이름을 입력하세요" value="${ member.name }" maxlength="10">
 			</dd>
 		</dl>
 	</div>
@@ -35,7 +35,7 @@
 				<label for="phone">휴대폰번호</label>
 			</dt>
 			<dd>
-				<input type="tel" id="tel" name="tel" maxlength="13" placeholder="휴대폰번호를 입력하세요" value="${ member.tel }">
+				<input type="tel" id="tel" name="box_tel" maxlength="13" placeholder="휴대폰번호를 입력하세요" value="${ member.tel }">
 			</dd>
 		</dl>
 	</div>
@@ -46,7 +46,7 @@
 				<label for="zipcode">우편번호</label>
 			</dt>
 			<dd>
-				<input id="zipcode" name="zipCode" placeholder="주소찾기 버튼을 눌러주세요" style="background: #fff" readonly>
+				<input id="zipcode" name="box_zip_code" placeholder="주소찾기 버튼을 눌러주세요" style="background: #fff" readonly>
 				<button type="button" id="searchPostcode" class="btn-square btn-black">주소찾기</button>
 			</dd>
 		</dl>
@@ -58,7 +58,7 @@
 				<label for="addrRoad">주소</label>
 			</dt>
 			<dd>
-				<input type="text" id="addrRoad" name="addrRoad" title="주소 입력" value="" style="background: #fff" readonly>
+				<input type="text" id="addrRoad" name="box_addr" title="주소 입력" value="" style="background: #fff" readonly>
 			</dd>
 		</dl>
 	</div>
@@ -69,7 +69,7 @@
 				<label for="addrDetail">상세주소</label>
 			</dt>
 			<dd>
-				<input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소 입력" value="" maxlength="100">
+				<input type="text" id="addrDetail" name="box_addr_detail" placeholder="상세주소 입력" value="" maxlength="100">
 			</dd>
 		</dl>
 	</div>
@@ -80,7 +80,7 @@
 				<label for="memo">배송메모</label>
 			</dt>
 			<dd>
-				<input id="memo" name="orderMemo" title="배송메모를 입력하세요" placeholder="배송메모를 입력하세요" value="">
+				<input id="memo" name="box_memo" title="배송메모를 입력하세요" placeholder="배송메모를 입력하세요" value="">
 			</dd>
 		</dl>
 	</div>

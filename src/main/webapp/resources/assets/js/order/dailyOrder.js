@@ -30,10 +30,10 @@ function calculateReceipt() {
     totalPay = totalPrice*4;
     
     // 적용
-    $("[data-price-view='origin']").text(totalPay.toLocaleString());
-    $("[data-price-view='sale']").text(totalPay.toLocaleString());
-    $("[data-price-view='payment']").text(totalPay.toLocaleString());
-    $("input[name='payPrice']").val(totalPay);
+    $("[data-price-view=origin]").text(totalPay.toLocaleString());
+    $("[data-price-view=sale]").text(totalPay.toLocaleString());
+    $("[data-price-view=payment]").text(totalPay.toLocaleString());
+    $("input[name=pay_price]").val(totalPay);
     
 } // calculateReceipt
 

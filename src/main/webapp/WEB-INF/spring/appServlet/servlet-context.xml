@@ -46,5 +46,4 @@
 		<beans:property name="defaultEncoding" value="ISO-8859-1"></beans:property>
 	</beans:bean>
 	
-	
 </beans:beans>

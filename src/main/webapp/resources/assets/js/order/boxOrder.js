@@ -1,4 +1,5 @@
 function calculateBoxReceipt() {
+	console.log("영수증 초기값 설정");
 	// 영수증 초기값 설정
 	let originPrice = 0;
 	let salePrice = 0;
@@ -21,11 +22,11 @@ function calculateBoxReceipt() {
     $("b[data-price-view=origin]").text(bpStr)
     $("b[data-price-view=sale]").text(npStr)
     $("b[data-price-view=payment]").text(npStr)
-    $("input[name='price']").val(originPrice);
-    $("input[name='salePrice']").val(salePrice);
-    $("input[name='discountPrice']").val(0);
-    $("input[name='shppingPrice']").val(0);
-	$("input[name='payPrice']").val(salePrice);
+    $("#box_price").val(originPrice);
+    $("#box_sale_price").val(salePrice);
+    $("#box_discount_price").val(0);
+    $("#box_shpping_fee").val(0);
+	$("#box_final_price").val(salePrice);
 	
 	return salePrice;
 }
@@ -68,8 +69,8 @@ function editReceipt(option, discountVal, salePrice) {
 	viewCoupon.text(dispDiscount.toLocaleString());
     viewPay.text(dispPayPrice.toLocaleString());
     
-    $("input[name='discountPrice']").val(dispDiscount);
-    $("input[name='payPrice']").val(dispPayPrice);
+    $("#box_discount_price").val(dispDiscount);
+    $("#box_final_price").val(dispPayPrice);
     
 } // editReceipt
 
@@ -94,7 +95,8 @@ function couponSelect (salePrice) {
 
 	
 	// 3. 선택한 쿠폰 -> li 추가
-	let tpl = `<li data-coupon-inx="${index}" data-coupon-no="${coupon_no}" data-coupon-name="${coupon-name}" data-duplicate="${duplicate}" data-max-discount="${max_discount}" data-discount="${discount}" data-discount-val="${discount_val}">`
+	let tpl = `<li data-coupon-inx="${index}" data-coupon-no="${coupon_no}" data-coupon-name="${coupon_name}" data-duplicate="${duplicate}" data-max-discount="${max_discount}" data-discount="${discount}" data-discount-val="${discount_val}">`
+				+ `<input type="hidden" id="coupon_no" name="haveCouponList[${index-1}].coupon_no" value="${coupon_no}"/>`
 				+ `<div>`
 					+ `<em>${coupon_name}</em>`
 					+ `<button type="button" class="coupon-remove btn-pop-close"><i class="ico-close ico"></i></button>`

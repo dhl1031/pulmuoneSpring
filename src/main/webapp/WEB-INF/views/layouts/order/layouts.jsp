@@ -13,15 +13,6 @@
   	<!-- main -->
   	<main class="page order box">
 		<div class="container">
-			<div class="breadcrumb-style">
-	            <div class="wrap">
-	                <ul>
-	                    <li><a href="/">홈</a></li>
-	                    <li><a href="/">장바구니</a></li>
-	                    <li><a class="active">주문서작성</a></li>
-	                </ul>
-	            </div>
-	        </div>
 	             
 	        <div class="page-wrap">
 				<!-- content -->
@@ -103,7 +94,7 @@
 			// 카드 인증
 			$("#validCardBtn").on("click", function () {
 				validCard();
-			})
+			});
 			
 			$(".numberOnly").on("keyup", function() {
 				$(this).val($(this).val().replace(/[^0-9]/g,""));
@@ -112,7 +103,13 @@
 			// 계좌 인증
 			$("#callCms").on("click", function () {
 				callCms($(this));
-			})
+			});
+			
+			// 결제 방식
+			$("#myTab-area li").on("click", function () {
+				let index = $(this).index();
+				$("#box_pay_method").val(index);
+			});
 		});
 </script>
 </body>

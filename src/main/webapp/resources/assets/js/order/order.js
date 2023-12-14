@@ -130,6 +130,11 @@ function showAddress(member_no, pageNo) {
 }
 
 
+// 
+
+
+
+// 주문하기
 function goStep2(orderType){
 	if ($("#receiver").val() == "") {
 		$('#alertModal').find(".modal-body").text("받는사람항목이 비어있습니다.");
@@ -150,10 +155,12 @@ function goStep2(orderType){
 		$('#alertModal').find(".modal-body").text("구매조건 확인 및 결제진행에 동의 해주세요.");
 		showModal();
 		return;
-	} 
+	}
+	
+	let url = "/"+orderType+"/order/step2";
 	$("#orderForm").attr({
 		method:"post"
-		, action:"/"+orderType+"/order/step2"
+		, action:url
 	}).submit();
 };
 

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="contents-area">
 	<form id="orderForm">
+		<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
 		<input type="hidden" name="price" value="">
 		<input type="hidden" name="salePrice" value="">
 		<input type="hidden" name="discountPrice" value="">

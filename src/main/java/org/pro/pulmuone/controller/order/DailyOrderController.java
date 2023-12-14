@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.pro.pulmuone.domain.order.OrderAddrBookDTO;
 import org.pro.pulmuone.domain.order.daily.DailyItemInfoDTO;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -92,9 +94,26 @@ public class DailyOrderController {
 		OrderAddrBookDTO member = orderServiceImpl.getMemberInfo(username);
 		model.addAttribute("member", member);
 		
-		
-
 		return "order/daily/step1.tiles";
+	}
+	
+	
+	@PostMapping("step2")
+ 	public String step2(@RequestParam Map<String, Object> allParameters, Model model) {
+		log.info("> BoxOrderController.step2 ...");
+		
+		Iterator<String> ir = allParameters.keySet().iterator();
+		while (ir.hasNext()) {
+			String string = (String) ir.next();
+			System.out.println(string);
+			System.out.println(allParameters.get(string));
+		} // while
+		
+		/*
+		
+		*/
+		
+		return "order/box/step2.tiles";
 	}
 
 }

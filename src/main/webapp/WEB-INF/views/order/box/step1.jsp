@@ -2,14 +2,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="contents-area">
-	<form id="orderForm">
-		<input type="hidden" name="price" value="">
-		<input type="hidden" name="salePrice" value="">
-		<input type="hidden" name="discountPrice" value="">
-		<input type="hidden" name="shppingPrice" value="0">
-		<input type="hidden" name="payPrice" value="">
-		<input type="hidden" name="payMethod" value="0">
 
+			<div class="breadcrumb-style">
+	            <div class="wrap">
+	                <ul>
+	                    <li><a href="/">홈</a></li>
+	                    <li><a href="/">장바구니</a></li>
+	                    <li><a class="active">주문서작성</a></li>
+	                </ul>
+	            </div>
+	        </div>
+	        
+	<form id="orderForm">
+		<input type="hidden" id="${ _csrf.parameterName }" name="${ _csrf.parameterName }" value="${ _csrf.token }">
+		<input type="hidden" id="box_price" name="box_price" value="">
+		<input type="hidden" id="box_sale_price" name="box_sale_price" value="">
+		<input type="hidden" id="box_discount_price" name="box_discount_price" value="">
+		<input type="hidden" id="box_shpping_fee" name="box_shpping_fee" value="0">
+		<input type="hidden" id="box_final_price" name="box_final_price" value="">
+		<input type="hidden" id="box_pay_method" name="box_pay_method" value="0">
+		
 		<div class="cont-checkout-area">
 			<div class="title-tab-area">
 				<h2 class="cont-title">주문서 작성</h2>
