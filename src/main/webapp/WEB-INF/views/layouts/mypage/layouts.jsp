@@ -23,7 +23,7 @@
   	<!-- footer -->
   	<tiles:insertAttribute name="footer" />
 </div>
-
+<%@ include file="/WEB-INF/views/ui/modal.jsp" %>
 </body>
 
 </html>

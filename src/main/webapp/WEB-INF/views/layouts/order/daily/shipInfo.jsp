@@ -29,7 +29,7 @@
 					</label>
 				</dt>
 				<dd>
-					<input type="text" readonly id="prtnName" name="prtnName" title="" placeholder="배송 장소 선택 및 주소 입력을 해주세요." value="">
+					<input type="text" readonly="" name="prtnName" title="" placeholder="배송 장소 선택 및 주소 입력을 해주세요." value="">
 					<input type="hidden" id="officeCode" name="estCd" value="">
 					<input type="hidden" id="buTelno" name="officePhoneNumber" value="">
 				</dd>

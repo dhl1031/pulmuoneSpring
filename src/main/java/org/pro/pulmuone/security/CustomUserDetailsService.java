@@ -2,7 +2,7 @@ package org.pro.pulmuone.security;
 
 import org.pro.pulmuone.domain.member.MemberDTO;
 import org.pro.pulmuone.mapper.member.MemberMapper;
-import org.pro.pulmuone.security.domain.CustomerUser;
+import org.pro.pulmuone.security.domain.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		
 		log.warn("Queried by Member mapper:" + vo);
 		
-		return vo == null ? null : new CustomerUser(vo);
+		return vo == null ? null : new CurrentUser(vo);
 	}
 
 }

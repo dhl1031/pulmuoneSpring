@@ -34,7 +34,7 @@
           	// 절대경로로 적어줘야하지만 절대경로는 서비스를 실행하는
           	 리눅스와 윈도우즈에 차이가 있으므로 설정을 따로 안하고 
           	 자바가 지정해놓은 임시 렉토리를 사용 -->
-         <location>/temp</location>
+         <location>C:\\temp</location>
          <max-file-size>20971520</max-file-size> <!-- 1MB * 20 -->
          <max-request-size>41943040</max-request-size><!-- 40MB -->
          <file-size-threshold>20971520</file-size-threshold> 20MB

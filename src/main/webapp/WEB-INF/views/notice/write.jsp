@@ -80,7 +80,7 @@
 				},
 	       	},
 			ckfinder: {
-				uploadUrl : "/forum/notice/upload" + `?${_csrf.parameterName}=${_csrf.token}`,
+				uploadUrl : "/upload/notice",
 				withCredentials: true,
 				
 			}	

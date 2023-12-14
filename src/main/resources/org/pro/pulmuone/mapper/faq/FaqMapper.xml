@@ -67,5 +67,19 @@
 		</choose>
      </select>
      
+     
+     <!-- int write(FaqDTO dto) throws SQLException -->
+     <insert id="write">
+     	INSERT INTO faq (q_no, faq_no, question, answer)
+		VALUES (seq_faq.NEXTVAL, #{faq_no}, #{question}, #{answer}) 
+     </insert>
+     
+     <!--  // 삭제 
+	int delete(int seq, int category) throws SQLException; -->
+	<delete id="delete">
+		DELETE FROM faq
+		WHERE faq_no = #{param2} AND q_no = #{param1}
+	</delete>
+	
 </mapper>
 

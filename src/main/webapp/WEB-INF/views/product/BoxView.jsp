@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-	<script type="text/javascript">
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<script type="text/javascript">
     $().ready(function () {
         $('#removeBanner').click(function (){
 
@@ -41,7 +41,7 @@
         });
     });
 </script>
-	<script>
+<script>
 	var formatter = new Intl.NumberFormat();
 	var days = ["A", "B", "C", "D", "E"];
 
@@ -281,7 +281,7 @@
 		})		
 
 </script>
-	<script type="text/javascript">
+<script type="text/javascript">
 	var itemType = "box";
 	var formatter = new Intl.NumberFormat();
 	var limitSize = parseInt("-1" || "-1", 10);
@@ -350,7 +350,7 @@
 
 
 </script>
-	<script>
+<script>
   var nowArgs = undefined;
   window.orderProcess = function (args) {
     if (!window.is_signed) {
@@ -462,157 +462,131 @@
     }
   })
 </script>
-		<main class="page">
-			<div class="bgfff">
-				<div class="breadcrumb-style">
-					<div class="container">
-						<ul>
-							<li><a href="/">홈</a></li>
-							<li><a href="/product/box">택배배송</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="container">
-					<div class="product-info-area">
-						<div class="thumb-area">
-							<c:forEach var="dto" items="${list }" end="0">
-								<div class="main-thumb">
+<main class="page">
+	<div class="bgfff">
+		<div class="breadcrumb-style">
+			<div class="container">
+				<ul>
+					<li><a href="/">홈</a></li>
+					<li><a href="/product/box">택배배송</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="container">
+			<div class="product-info-area">
+				<div class="thumb-area">
+					<c:forEach var="dto" items="${list }" end="0">
+						<div class="main-thumb">
+							<img src="/file/download/product/${dto.system_name }">
+						</div>
+					</c:forEach>
+					<ul class="sub-thumb">
+						<c:forEach var="dto" items="${list }" end="4">
+							<li class="active">
+								<button type="button" class="item">
 									<img src="/file/download/product/${dto.system_name }">
-								</div>
-							</c:forEach>
-							<ul class="sub-thumb">
-								<c:forEach var="dto" items="${list }" end="4">
-									<li class="active">
-										<button type="button" class="item">
-											<img src="/file/download/product/${dto.system_name }">
-										</button>
-									</li>
-								</c:forEach>
-							</ul>
-						</div>
-						<div class="info-area">
-							<div class="label-line">
-								<label class="best">BEST</label>
-							</div>
-							<span class="prd-state">냉장상품</span>
-							<div class="prd-detail-title-area">
-								<div style="flex: 1; padding-right: 10px">
-									<h2>${list[0].products_name }</h2>
-									<p>${list[0].products_sub_name }</p>
-								</div>
-								<button data-toggle="modal" data-target="#shareModal"
-									type="button" class="ellipse-button primary"
-									style="margin-top: 8px">
-									<i class="ico ico-share-wt"></i> <span class="offscreen">공유하기</span>
 								</button>
-							</div>
-							<div class="product-addiction">
-								<div class="price-item">
-									<span style="padding-right: 12px; font-size: 22px;">
-										(원산지 :상품상세 참조) </span>
-									<p>
-										<fmt:formatNumber value="${list[0].price }" pattern="#,###" />
-										<span>원</span>
-									</p>
-									<span>(${list[0].products_size })</span>
-								</div>
-							</div>
-							<div class="buy-option"></div>
+							</li>
+						</c:forEach>
+					</ul>
+				</div>
+				<div class="info-area">
+					<div class="label-line">
+						<label class="best">BEST</label>
+					</div>
+					<span class="prd-state">냉장상품</span>
+					<div class="prd-detail-title-area">
+						<div style="flex: 1; padding-right: 10px">
+							<h2>${list[0].products_name }</h2>
+							<p>${list[0].products_sub_name }</p>
+						</div>
+						<button data-toggle="modal" data-target="#shareModal" type="button" class="ellipse-button primary" style="margin-top: 8px">
+							<i class="ico ico-share-wt"></i> <span class="offscreen">공유하기</span>
+						</button>
+					</div>
+					<div class="product-addiction">
+						<div class="price-item">
+							<span style="padding-right: 12px; font-size: 22px;"> (원산지 :상품상세 참조) </span>
+							<p>
+								<fmt:formatNumber value="${list[0].price }" pattern="#,###" />
+								<span>원</span>
+							</p>
+							<span>(${list[0].products_size })</span>
 						</div>
 					</div>
+
+					<div class="buy-option"></div>
 				</div>
-				<!-- Nav tabs -->
-				<div class="tab-area">
-					<ul class="nav nav-tabs" role="tablist">
-						<li role="presentation"><a href="#home" class="active"
-							aria-controls="home" role="tab" data-toggle="tab">상품정보</a></li>
-						<li role="presentation"><a href="#info" aria-controls="info"
-							role="tab" data-toggle="tab">상품정보제공고시</a></li>
+			</div>
+		</div>
+		<!-- Nav tabs -->
+		<div class="tab-area">
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation"><a href="#home" class="active" aria-controls="home" role="tab" data-toggle="tab">상품정보</a></li>
+				<li role="presentation"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">상품정보제공고시</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- Tab panes -->
+	<div class="tab-content">
+		${list[0].content }
+		<div role="tabpanel" class="tab-pane" id="info">
+			<div class="container">
+				<div class="product-spec">
+					<ul>
+						<li><label>식품의 유형</label>
+							<p>상세 참조</p></li>
+						<li><label>제조업소의 명칭과 소재지</label>
+							<p>상세 참조</p></li>
+						<li><label>제조연월일/유통기한</label>
+							<p>상세 참조</p></li>
+						<li><label>용량</label>
+							<p>상세 참조</p></li>
+						<li><label>수량</label>
+							<p>상세 참조</p></li>
+						<li><label>원재료 및 함량</label>
+							<p>상세 참조</p></li>
+						<li><label>영양정보</label>
+							<p>상세 참조</p></li>
+						<li><label>영양정보</label>
+							<p>상세 참조</p></li>
+						<li><label>섭취량,섭취방법 및 섭취시 주의사항 및 부작용 가능성</label>
+							<p>상세 참조</p></li>
+						<li><label>질병의 예방 및 치료를 위한 의약품이 아니라는 내용의 표현</label>
+							<p>해당 사항 없음</p></li>
+						<li><label>유전자변형건강기능식품에 해당하는 경우의 표시</label>
+							<p>해당 사항 없음</p></li>
+						<li><label>수입신고여부</label>
+							<p>해당 사항 없음</p></li>
+						<li><label>소비자안전을 위한 주의사항</label>
+							<p>상세 참조</p></li>
+						<li><label>소비자 상담번호</label>
+							<p>080-800-0393</p></li>
 					</ul>
 				</div>
 			</div>
-			<!-- Tab panes -->
-			<div class="tab-content">
-				${list[0].content }
-				<div role="tabpanel" class="tab-pane" id="info">
-					<div class="container">
-						<div class="product-spec">
-							<ul>
-								<li><label>식품의 유형</label>
-									<p>상세 참조</p></li>
+		</div>
+	</div>
+	<a class="faq-product" href="/forum/faq/list">
+		<div class="container">
+			<h2 class="part-title">FAQ</h2>
+			<p>자주 묻는 질문입니다.</p>
+		</div>
+	</a>
+	<div class="bottom-fixed-layer">
+		<div class="container">
+			<div class="info">
+				<div class="prd-detail-modal-title">
+					<span>수량선택</span>
+					<div class="prd-select-amount">
+						<button type="button" class="btn-minus">
+							<span class="hide">제품 빼기</span>
+						</button>
+						<em class="box-qty" style="margin: 0px 20px">1</em>
+						<button class="btn-plus" type="button">
+							+<span class="hide">제품 추가</span>
+						</button>
 
-								<li><label>제조업소의 명칭과 소재지</label>
-									<p>상세 참조</p></li>
-
-								<li><label>제조연월일/유통기한</label>
-									<p>상세 참조</p></li>
-
-								<li><label>용량</label>
-									<p>상세 참조</p></li>
-
-								<li><label>수량</label>
-									<p>상세 참조</p></li>
-
-								<li><label>원재료 및 함량</label>
-									<p>상세 참조</p></li>
-
-								<li><label>영양정보</label>
-									<p>상세 참조</p></li>
-
-								<li><label>영양정보</label>
-									<p>상세 참조</p></li>
-
-								<li><label>섭취량,섭취방법 및 섭취시 주의사항 및 부작용 가능성</label>
-									<p>상세 참조</p></li>
-
-								<li><label>질병의 예방 및 치료를 위한 의약품이 아니라는 내용의 표현</label>
-									<p>해당 사항 없음</p></li>
-
-								<li><label>유전자변형건강기능식품에 해당하는 경우의 표시</label>
-									<p>해당 사항 없음</p></li>
-
-								<li><label>수입신고여부</label>
-									<p>해당 사항 없음</p></li>
-
-								<li><label>소비자안전을 위한 주의사항</label>
-									<p>상세 참조</p></li>
-
-								<li><label>소비자 상담번호</label>
-									<p>080-800-0393</p></li>
-
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<a class="faq-product" href="/forum/faq/list">
-				<div class="container">
-					<h2 class="part-title">FAQ</h2>
-					<p>자주 묻는 질문입니다.</p>
-				</div>
-			</a>
-			<div class="bottom-fixed-layer">
-				<div class="container">
-					<div class="info">
-						<div class="prd-detail-modal-title">
-							<span>수량선택</span>
-							<div class="prd-select-amount">
-								<button type="button" class="btn-minus">
-									<span class="hide">제품 빼기</span>
-								</button>
-								<em class="box-qty" style="margin: 0px 20px">1</em>
-								<button class="btn-plus" type="button">
-									+<span class="hide">제품 추가</span>
-								</button>
-							</div>
-						</div>
-						<div class="prd-detail-modal-title " style="margin-left: 50px">
-							<span>금액</span>
-							<p id="totalPrice" class="price">
-								<b style="font-weight: 400"></b><span>원</span>
-							</p>
-						</div>
-					</div>
 					<div class="button-set"
 						style="margin-right: -4px; margin-bottom: 7px">
 						<c:choose>
@@ -628,9 +602,34 @@
 						<!-- 품절용 가이드 추가 -->
 						<button id="cartBtn" class="button-fix black">장바구니</button>
 						<button id="orderBtn" class="button-fix primary">바로구매</button>
+
 					</div>
 				</div>
+				<div class="prd-detail-modal-title " style="margin-left: 50px">
+					<span>금액</span>
+					<p id="totalPrice" class="price">
+						<b style="font-weight: 400"></b><span>원</span>
+					</p>
+				</div>
 			</div>
-		</main>
+			<div class="button-set" style="margin-right: -4px; margin-bottom: 7px">
+				<c:choose>
+					<c:when test="${list[0].wish_status eq 1 }">
+						<button class="button-fix interest-button  active" data-wish-type="box" data-wish-id="${list[0].products_tag }"></button>
+					</c:when>
+					<c:otherwise>
+						<button class="button-fix interest-button " data-wish-type="box" data-wish-id="${list[0].products_tag }"></button>
+					</c:otherwise>
+				</c:choose>
+				<!-- 품절용 가이드 추가 -->
+				<form action="/box/order/step1" method="GET">
+					<input type="hidden" name="productsNo" value="${list[0].products_no }"> <input type="hidden" name="qty" value="1">
+					<button id="cartBtn" class="button-fix black">장바구니</button>
+					<button id="orderBtn" class="button-fix primary">바로구매</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</main>
 </html>
 

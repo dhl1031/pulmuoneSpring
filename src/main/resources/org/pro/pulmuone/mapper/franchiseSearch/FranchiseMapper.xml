@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="org.pro.pulmuone.mapper.franchiseSearch.FranchiseMapper">
+
+	<!-- // 가맹점 조회
+	ArrayList<FranchiseDTO> select(AddressDTO vo) throws SQLException; -->
+	<select id="select" resultType="org.pro.pulmuone.domain.franchiseSearch.FranchiseDTO">
+		 <![CDATA[
+		 	SELECT fc.*
+			FROM (
+				SELECT fc_name, fc_addr, fc_lat, fc_lng, fc_phone, fc_tel, fc_type, gift_avail,
+					(6371 * acos (cos ( radians( ${y} ) ) * cos( radians( fc_lat ) ) * cos( radians( fc_lng ) - radians( ${x} ) )
+					+ sin ( radians( ${y} ) ) * sin( radians( fc_lat ) )
+					)) distance
+				FROM franchise
+			) fc
+			WHERE distance < 7 AND ROWNUM <= 2 
+		]]>
+	</select>	
+    
+</mapper>
+

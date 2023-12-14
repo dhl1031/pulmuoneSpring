@@ -4,75 +4,95 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.pro.pulmuone.mapper.product.ProductMapper">
-<!-- 	List<ProductsDTO> search(); -->
-<sql id="tag">
-			<foreach collection="tagArr" item="tags"  open="(" separator="," close=")">
-				#{tags}
-			</foreach>
-</sql>
-<select id="search" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
-      SELECT products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price 
-				 , products_size, delivery_type, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name, event_tag, event_tag2, wish_status 
-				FROM ( 
-				        SELECT ROWNUM no, t.* 
-				        FROM (  
-				                select a.products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price 
-					              ,products_size, delivery_type, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name, event_tag, event_tag2, wish_status 
-					               from products a join products_img b on a.products_no = b.products_no					               
-					               where delivery_type = #{delivery_type} 
-					               and origin_name not like 'View%' 
-				<if test='category_no != null and category_no != ""'>
-				and category_no = #{category_no}
-				</if>				
-				<if test='tags != null and tags != ""'>
-				  and( tag_no1 in <include refid="tag"></include> 
-				  or  tag_no2 in <include refid="tag"></include>
-				  or  tag_no3 in <include refid="tag"></include>
-				  or  tag_no4 in <include refid="tag"></include>
-				  or  tag_no5 in <include refid="tag"></include>) 
-				</if>				
-				  ) t 
-				)  b 
-				WHERE b.no BETWEEN #{pageNo} AND #{pageNo2} 	
-     </select>
-<select id="searchcount" resultType="org.pro.pulmuone.domain.product.ProductsDTO">     
-		select a.products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price
-	              , products_size, delivery_type, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name, event_tag, event_tag2, wish_status 	              
-	               from products a join products_img b on a.products_no = b.products_no 
-	               where delivery_type = #{delivery_type}
-	               and origin_name not like 'View%'
-	            <if test='category_no != null and category_no != ""'>
-				   and category_no = #{category_no}
-				</if>				
-				<if test='tags != null and tags != ""'>
-				   and( tag_no1 in <include refid="tag"></include> 
-				   or  tag_no2 in <include refid="tag"></include>
-				   or  tag_no3 in <include refid="tag"></include>
-				   or  tag_no4 in <include refid="tag"></include>
-				   or  tag_no5 in <include refid="tag"></include>) 
-				</if>
-</select>      
-<!-- 	List<ProductsDTO> best(); -->
-<select id="best" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
-       select a.products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price
-			, products_size, delivery_type, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name, event_tag, event_tag2,wish_status 	              
-			from products a join products_img b on a.products_no = b.products_no 
-			where delivery_type = #{delivery_type}
-			and origin_name not like 'View%'
-			<if test="delivery_type == 'daily' ">		
-			and a.products_no in (0071654,0070776,0073405,0073184,0073325,0073019,0073344,0071664,0071928,0073156,0073327,0070680,0070445,0073080,0072652,0073155,0073274,0070800,0072840,0073271) 
-			</if>
-			<if test="delivery_type == 'box' ">
-			and a.products_no in (0073561,0072964,0073077,0072905,0073166,0072965,0073190,0072906,0073136,0073326,0072966,0073165,0071968,0073324 )
-			</if>
-			<if test='category_no != null and category_no != ""'>
+	<!-- List<ProductsDTO> search(); -->
+	<sql id="tag">
+		<foreach collection="tagArr" item="tags" open="(" separator="," close=")">
+			#{tags}
+		</foreach>
+	</sql>
+	<select id="search" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
+		SELECT products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price, products_size, delivery_type
+		, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name, event_tag, event_tag2, wish_status
+		FROM (
+		SELECT ROWNUM no, t.*
+		FROM (
+		SELECT a.products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price, products_size, delivery_type
+		, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name, event_tag, event_tag2, wish_status
+		from products a join products_img b on a.products_no = b.products_no
+		where origin_name not like 'View%'
+		<if test='delivery_type != null and delivery_type != ""'>
+			and delivery_type = #{delivery_type}
+		</if>
+		<if test='category_no != null and category_no != ""'>
 			and category_no = #{category_no}
-			</if>
-     </select>	
-<select id="view" resultType="org.pro.pulmuone.domain.product.ProductsDTO">     
-     select a.products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price, products_size, delivery_type, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name,origin_name, event_tag, event_tag2, wish_status 
-			 from products a join products_img b on a.products_no = b.products_no 
-		     where products_tag = #{products_tag} 
-			 and origin_name like 'View%'
-</select>
+		</if>
+		<if test='tags != null and tags != ""'>
+			and( tag_no1 in
+			<include refid="tag"></include>
+			or tag_no2 in
+			<include refid="tag"></include>
+			or tag_no3 in
+			<include refid="tag"></include>
+			or tag_no4 in
+			<include refid="tag"></include>
+			or tag_no5 in
+			<include refid="tag"></include>
+			)
+		</if>
+		) t
+		) b
+		WHERE b.no BETWEEN #{pageNo} AND #{pageNo2}
+	</select>
+	<select id="searchcount" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
+		select a.products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price, products_size, delivery_type
+		, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name, event_tag, event_tag2, wish_status
+		from products a join products_img b on a.products_no = b.products_no
+		where origin_name not like 'View%'
+		<if test='delivery_type != null and delivery_type != ""'>
+			and delivery_type = #{delivery_type}
+		</if>
+		<if test='category_no != null and category_no != ""'>
+			and category_no = #{category_no}
+		</if>
+		<if test='tags != null and tags != ""'>
+			and( tag_no1 in
+			<include refid="tag"></include>
+			or tag_no2 in
+			<include refid="tag"></include>
+			or tag_no3 in
+			<include refid="tag"></include>
+			or tag_no4 in
+			<include refid="tag"></include>
+			or tag_no5 in
+			<include refid="tag"></include>
+			)
+		</if>
+	</select>
+	<!-- List<ProductsDTO> best(); -->
+	<select id="best" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
+		select a.products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price, products_size, delivery_type
+		, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name, event_tag, event_tag2, wish_status
+		from products a join products_img b on a.products_no = b.products_no
+		where delivery_type = #{delivery_type}
+		and origin_name not like 'View%'
+		<if test="delivery_type == 'daily' ">
+			and a.products_no in
+			(0071654,0070776,0073405,0073184,0073325,0073019,0073344,0071664,0071928,0073156,0073327,0070680,0070445,0073080,0072652,0073155,0073274,0070800,0072840,0073271)
+		</if>
+		<if test="delivery_type == 'box' ">
+			and a.products_no in
+			(0073561,0072964,0073077,0072905,0073166,0072965,0073190,0072906,0073136,0073326,0072966,0073165,0071968,0073324
+			)
+		</if>
+		<if test='category_no != null and category_no != ""'>
+			and category_no = #{category_no}
+		</if>
+	</select>
+	<select id="view" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
+		select a.products_no, category_no, products_name, products_sub_name, products_type, content, price, event_price, products_size, delivery_type
+		, tag_no1, tag_no2, tag_no3, tag_no4, tag_no5, products_tag, reg_date, system_name,origin_name, event_tag, event_tag2, wish_status
+		from products a join products_img b on a.products_no = b.products_no
+		where products_tag = #{products_tag}
+		and origin_name like 'View%'
+	</select>
 </mapper>

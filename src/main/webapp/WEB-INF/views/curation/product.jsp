@@ -12,7 +12,6 @@
 			<div id="container-wrapper" class="container-wrapper">
 				<!-- TODO : 회원쪽 페이지들은 <div class="container-wrapper member"> -->
 
-<!-- 				<form id="customerForm" action="/customer/product/result/result.do" method="post"> -->
 				<input type="hidden" name="customerType" /> <input type="hidden"
 					name="value" />
 				<div class="visual-area curation">
@@ -62,7 +61,7 @@
 						</div>
 					</div>
 				</div>
-<!-- 				</form> -->
+
 			</div>
 
 		</main>

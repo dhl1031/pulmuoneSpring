@@ -220,7 +220,7 @@
          <div class="sub-link">
             <div>
                <b>맞춤큐레이션</b>
-               <a href="/customer/product/product" title="해당 페이지로 가기">간단한 질문에 답하면 고객 맞춤 상품을 추천드려요
+               <a href="/customer/product" title="해당 페이지로 가기">간단한 질문에 답하면 고객 맞춤 상품을 추천드려요
                   <i class="ico ico-arr-right6"></i>
                </a>
             </div>

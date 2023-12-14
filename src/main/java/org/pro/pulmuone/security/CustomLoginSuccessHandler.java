@@ -1,14 +1,13 @@
 package org.pro.pulmuone.security;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.pro.pulmuone.security.domain.CurrentUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -30,9 +29,8 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-		
 		log.warn("> Login Success...");
-
+		
 		clearSession(request);
 		
 		// Spring Security가 intercept했다면, 이전 페이지 정보를 가지고 있음.
@@ -44,14 +42,9 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		}
 		
 		String location = "/";
-		
-		log.info("ref1: " + referer);
-//		log.info("ref2: " + request.getHeader("Referer"));
-		
-		
+
         if (savedRequest != null) {
         	location = savedRequest.getRedirectUrl();
-        	log.info("1:" + location);
         } else if (referer != null && !referer.equals("")) {
         	// intercept가 아닌 경우, 컨트롤러에서 request에 담은 referer 사용
         	// 예시) 비회원 상태로 이용가능한 화면에서, 헤더 로그인 버튼 클릭을 통한 로그인 시도
@@ -59,16 +52,18 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
             	location = "/";
             } else {
             	location = referer;
-            	log.info("2:" + location);
             }
         }
-		
         
-        log.info(location);
-//		response.sendRedirect(location);
+        // 비밀번호를 초기화한 상태일 때, 비밀번호 변경 페이지로 즉시 이동.
+        CurrentUser user = (CurrentUser) authentication.getPrincipal();
+		if (user.getMember().getPwdReset() == 1) {
+			location = "/member/find/changePassword";
+		}
+		
+        log.info(">> location:" + location);
 		redirectStrategy.sendRedirect(request, response, location);
 		
-
 	}
 	
 	

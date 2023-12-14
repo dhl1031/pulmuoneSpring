@@ -9,6 +9,7 @@
    		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />
    		<put-attribute name="header" value="/WEB-INF/views/layouts/header.jsp" />
    		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
+   		<put-attribute name="footermodal" value="/WEB-INF/views/layouts/footermodal.jsp" />
     </definition>
   <!--  메인 화면 -->
     <definition name="home.*" extends="base">
@@ -16,19 +17,21 @@
 	</definition>
    <!-- */* -->
     <definition name="*/*.tiles" extends="base">
-        <put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp" />
+        <put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp" />       
     </definition>
+
+      <!-- 모달창 -->
+   <definition name="*/*.modal"  template="/WEB-INF/views/modal/modalview.jsp">
+      <put-attribute name="modal" value="/WEB-INF/views/{1}/{2}.jsp" />     
+   </definition>
+
     
-    	<!-- 큐레이션 결과 */* -->
+    <!-- 큐레이션 결과 */* -->
    <definition name="curation/*/*.tiles" extends="base">
       <put-attribute name="main" value="/WEB-INF/views/curation/{1}/{2}.jsp" />     
    </definition>
    
-   <!-- 큐레이션 모달창 -->
-   <definition name="*/*.modal"  template="/WEB-INF/views/curation/result/modalview.jsp">
-      <put-attribute name="modal" value="/WEB-INF/views/curation/{1}/{2}.jsp" />     
-   </definition>
-   
+  
    <!-- forum/ -->
     <definition name="forum/*/*.tiles" template="/WEB-INF/views/layouts/forum/layouts.jsp">
    		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />
@@ -58,40 +61,37 @@
     
 	<!-- mypage -->
     <definition name="mypage/*/*.tiles" extends="mypage">
-		<put-attribute name="content" value="/WEB-INF/views/mypage/{1}/{2}.jsp" />    
+		<put-attribute name="content" value="/WEB-INF/views/mypage/{1}/{2}.jsp" />
+		<put-attribute name="page" value="{1}"></put-attribute>    
    </definition>
    
-   
-   
-   
-   
-    <!-- customer.notice -->  
-    <!-- customer.noticeReg -->  
-    <!-- customer.noticeEdit --> 
-    <!-- joinus.join -->   
-    <!-- joinus.login -->   
-    <!-- <definition name="*.*" template="/WEB-INF/views/{1}/inc/layout.jsp">
-      <put-attribute name="header"  value="/WEB-INF/views/inc/header.jsp" />
-      <put-attribute name="footer"  value="/WEB-INF/views/inc/footer.jsp" />
-      
-      <put-attribute name="visual" value="/WEB-INF/views/{1}/inc/visual.jsp" /> 
-      <put-attribute name="aside" value="/WEB-INF/views/{1}/inc/aside.jsp" /> 
-      <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" /> 
-      
-      <put-attribute name="css" value="{2}.css" />
-    </definition> -->
     
-    <!-- member -->
-    <definition name="member/*/*.tiles" template="/WEB-INF/views/layouts/member/{1}/layouts.jsp">
+   <!-- login -->
+   <definition name="member/login.tiles" template="/WEB-INF/views/layouts/member/login/layouts.jsp">
+   		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />
+   		<put-attribute name="header" value="/WEB-INF/views/layouts/member/header.jsp" /> 
+		<put-attribute name="footer" value="/WEB-INF/views/layouts/member/login/footer.jsp" />  
+		<put-attribute name="main" value="/WEB-INF/views/member/login.jsp" />
+   </definition>
+    <!-- regist/type -->
+    <definition name="member/regist/type.tiles" extends="member/login.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/member/regist/type.jsp" />     
+   </definition>
+    
+    <!-- regist -->
+    <definition name="regist" template="/WEB-INF/views/layouts/member/regist/layouts.jsp">
 		<put-attribute name="head" value="/WEB-INF/views/layouts/head.jsp" />
-   		<put-attribute name="header" value="/WEB-INF/views/layouts//member/{1}/header.jsp" />
-   		<put-attribute name="footer" value="/WEB-INF/views/layouts/footer.jsp" />
-	    <put-attribute name="aside" value="/WEB-INF/views/layouts/forum/aside.jsp" /> 
-		<put-attribute name="content" value="/WEB-INF/views/member/{1}/{2}.jsp" />    
-		
-<!-- 		<put-attribute name="page" value="{1}"></put-attribute> -->
+   		<put-attribute name="header" value="/WEB-INF/views/layouts/member/header.jsp" /> 
    </definition>
-    
+    <!-- regist/* -->
+    <definition name="member/regist/*.tiles" extends="regist">
+		<put-attribute name="main" value="/WEB-INF/views/member/regist/{1}.jsp" />    
+   </definition>
+	<!-- find/* -->
+	<definition name="member/find/*.tiles" extends="regist">
+		<put-attribute name="main" value="/WEB-INF/views/member/find/{1}.jsp" />    
+	</definition>
+   
 </tiles-definitions>
 
 

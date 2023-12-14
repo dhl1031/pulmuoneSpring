@@ -1,28 +1,18 @@
 package org.pro.pulmuone.controller.notice;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.pro.pulmuone.domain.PageDTO;
-import org.pro.pulmuone.domain.notice.ImgVO;
 import org.pro.pulmuone.domain.notice.NoticeDTO;
 import org.pro.pulmuone.service.notice.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
@@ -164,53 +154,5 @@ public class NoticeController {
 		return "redirect:list";
 	}
 	
-	// 업로드
-	@PostMapping("upload")
-	public @ResponseBody ImgVO noticeUpload(
-			@RequestParam("upload") CommonsMultipartFile multipartFile
-			, HttpServletRequest request
-			, HttpServletResponse response) throws IllegalStateException, IOException {
-		log.info("> noticeUpload.. ");
-		
-		String saveDirectory = null;
-		String filesystemName = null;
-		
-		ImgVO imgVo = new ImgVO();
-		
-		if( multipartFile != null ) {
-			saveDirectory = request.getServletContext().getRealPath("/upload/notice/");
-			
-			File f = new File(saveDirectory);
-		  	if( !f.exists() ) f.mkdirs();
-		  	System.out.println(">>> saveDirectory : " + saveDirectory);
-			
-		  	String OriginalFilename = multipartFile.getOriginalFilename();
-		  	filesystemName = getFileNameCheck(saveDirectory, OriginalFilename);
-		  	
-		  	File dest = new File(saveDirectory, filesystemName);
-		  	multipartFile.transferTo(dest);
-		  	
-		  	imgVo.setUploaded(true);
-		  	imgVo.setUrl("/upload/notice/" + filesystemName);
-		  	
-		  	return imgVo;
-		}
-		imgVo.setUploaded(false);
-		return imgVo;
-	}
 	
-	private String getFileNameCheck(String uploadRealPath, String originalFilename) {
-		int index = 1;      
-		while( true ) {         
-			File f = new File(uploadRealPath, originalFilename);         
-			if( !f.exists() ) return originalFilename;         
-			// upload 폴더에 originalFilename 파일이 존재한다는 의미         a.txt (4자리)
-			String fileName = originalFilename.substring(0, originalFilename.length() - 4 );  //   a
-			String ext =  originalFilename.substring(originalFilename.length() - 4 );  // .txt
-			// asdfasf-3.txt
-			originalFilename = fileName+"-"+(index)+ext;
-
-			index++;
-		} // while 
-	}
 }

@@ -98,11 +98,11 @@
 				<dd>
 					<div class="radio-area radio-type2">
 						<div class="radio">
-							<input type="radio" value="0" id="deliveryPlaceH" name="deliveryPlace">
+							<input type="radio" value="H" id="deliveryPlaceH" name="deliveryPlace">
 							<label for="deliveryPlaceH">가정</label>
 						</div>
 						<div class="radio">
-							<input type="radio" value="1" id="deliveryPlaceO" name="deliveryPlace">
+							<input type="radio" value="O" id="deliveryPlaceO" name="deliveryPlace">
 							<label for="deliveryPlaceO">회사/사무실</label>
 						</div>
 					</div>

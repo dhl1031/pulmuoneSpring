@@ -28,23 +28,23 @@
 	</form>
 </div>
 
-<%@ include file="/WEB-INF/views/layouts/order/daterangepicker.jsp"%>
-
 <script>
 	$(function () {
 		weekDayText();
 	})
 </script>
 <script>
-	$("#order_targets").on("click", ".prod-add", function() {
+	$("button.prod-add").on("click", function() {
 		plusBtn($(this));
 	})
-	
-	$("#order_targets").on("click", ".prod-remove", function() {
+
+	$("button.prod-remove").on("click", function() {
 		minusBtn($(this));
 	})
+	
 	
 	$("#allOrderBtn").on("click", function() {
 		goStep2("daily");
 	});
+	
 </script>

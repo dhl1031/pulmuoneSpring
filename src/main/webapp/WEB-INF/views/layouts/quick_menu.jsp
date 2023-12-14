@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="footer-wrapper">
-<script>
+	<script>
 
 var windowRef = null;
 function openWindowPop(url, name){
@@ -55,11 +55,7 @@ $(function(){
 </script>
 
 
-<div style="" id="mini-side-nav">
-	<a href="/mypage/drink/drink"><img src="/resources/assets/images/ui/quick1.png" alt=""></a>
-	<a id="quickChangeDrink" href="/mypage/drink/drink"><img src="/resources/assets/images/ui/quick2.png" alt=""></a>
-	<a id="quickChangeSchedule" href="/mypage/drink/drink"><img src="/resources/assets/images/ui/quick3.png" alt=""></a>
-	<a href="/mypage/drink/bill"><img src="/resources/assets/images/ui/quick4.png" alt=""></a>
-	<a href="#"><img src="/resources/assets/images/ui/quickTop.png" alt=""></a>
-</div>
+	<div style="" id="mini-side-nav">
+		<a href="/mypage/drink/drink"><img src="/resources/assets/images/ui/quick1.png" alt=""></a> <a id="quickChangeDrink" href="/mypage/drink/drink"><img src="/resources/assets/images/ui/quick2.png" alt=""></a> <a id="quickChangeSchedule" href="/mypage/drink/drink"><img src="/resources/assets/images/ui/quick3.png" alt=""></a> <a href="/mypage/drink/bill"><img src="/resources/assets/images/ui/quick4.png" alt=""></a> <a href="#"><img src="/resources/assets/images/ui/quickTop.png" alt=""></a>
+	</div>
 </div>

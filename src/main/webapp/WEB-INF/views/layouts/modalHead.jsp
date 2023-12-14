@@ -32,7 +32,6 @@
 <script src="/resources/assets/js/order/boxOrder.js"></script>
 <script src="/resources/assets/js/order/dailyOrder.js"></script>
 <script src="/resources/assets/js/order/order.js"></script>
-<script src="/resources/assets/js/order/apiKey.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!-- 부트스트랩 JavaScript 및 jQuery -->

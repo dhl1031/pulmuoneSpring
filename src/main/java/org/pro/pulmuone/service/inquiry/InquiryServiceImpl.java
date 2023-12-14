@@ -20,8 +20,8 @@ public class InquiryServiceImpl implements InquiryService{
 	}
 
 	@Override
-	public ArrayList<InquiryDTO> select(String user_id, String cate) throws SQLException {
-		return this.inquiryMapper.select(user_id, cate);
+	public ArrayList<InquiryDTO> select(String user_id, String cate, int pageNo, int numberPerPage) throws SQLException {
+		return this.inquiryMapper.select(user_id, cate, pageNo, numberPerPage);
 	}
 
 	@Override
@@ -37,6 +37,11 @@ public class InquiryServiceImpl implements InquiryService{
 	@Override
 	public int delete(String user_id, String category, int seq) throws SQLException {
 		return this.inquiryMapper.delete(user_id, category, seq);
+	}
+
+	@Override
+	public int getToatlPages(String userId, String category, int numberPerPage) throws SQLException {
+		return this.inquiryMapper.getTotalPages(userId, category, numberPerPage);
 	}
 
 }

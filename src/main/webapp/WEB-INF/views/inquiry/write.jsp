@@ -200,7 +200,7 @@
 	               },
 	       	},
 	           ckfinder: {
-	                   uploadUrl : "/forum/inquiry/upload" + `?${_csrf.parameterName}=${_csrf.token}`,
+	                   uploadUrl : "/upload/inquiry",
 	                   withCredentials: true
 	               }	
 	           })

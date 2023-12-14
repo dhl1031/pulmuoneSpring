@@ -6,27 +6,22 @@
 <mapper namespace="org.pro.pulmuone.mapper.inquiry.InquiryMapper">
 
 	<!-- // 문의 목록
-	ArrayList<InquiryDTO> select (String user_id, String category) throws SQLException; -->
+	ArrayList<InquiryDTO> select (String user_id, String cate, int pageNo, int numberPerPage) throws SQLException; -->
 	<select id="select" resultType="org.pro.pulmuone.domain.inquiry.InquiryDTO">
-	<!-- 	SELECT b.*
-		FROM (
-			SELECT ROWNUM no, t.*
-			FROM (
-				SELECT q_no, faq_no, question, answer
-				FROM faq
-				WHERE REGEXP_LIKE ( question, #{param3}, 'i' )
-				ORDER BY q_no DESC
-			) t
+		SELECT b.*
+		FROM (        
+		    SELECT ROWNUM no, t.*        
+		    FROM (
+		        SELECT *
+		        FROM inquiry
+		        WHERE member_id = #{param1}
+		        <if test="param2 != 'all' ">
+					AND inquiry_cate = #{param2}
+				</if>	
+		        ORDER BY inquiry_no DESC
+		    ) t
 		) b
-		WHERE b.no BETWEEN (#{param1}-1) * #{param2} + 1 AND ((#{param1}-1) * #{param2}) + #{param2} -->
-		
-		SELECT *
-		FROM inquiry
-		WHERE member_id = #{param1}
-		<if test="category != 'all' ">
-			AND inquiry_cate = #{param2}
-		</if>		
-		ORDER BY inquiry_no DESC
+		WHERE b.no BETWEEN (#{param3}-1) * #{param4} + 1 AND ((#{param3}-1) * #{param4}) + #{param4}
 		
 	</select>	
 
@@ -44,13 +39,28 @@
 		SELECT COUNT(*)
 		FROM inquiry
 		WHERE member_id = #{param1}		
-		<if test="category != 'all' ">
+		<if test="param2 != 'all' ">
 			AND inquiry_cate = #{param2}
 		</if>
 	</select>
 	
+	
+	<!-- 총 페이지수 
+	int getTotalPages(String userId, String category, int numberPerPage) throws SQLException; -->
+     <select id="getTotalPages" resultType="int">
+
+		SELECT CEIL(COUNT(*)/#{param3})
+        FROM inquiry
+        WHERE member_id = #{param1}
+        <if test="param2 != 'all' ">
+			AND inquiry_cate = #{param2}
+		</if>	
+     	
+     </select>
+	
+	
 	<!-- // 문의 상세보기
-	InquiryDTO view (String user_id, String category, int seq) throws SQLException; -->
+	InquiryDTO view (String user_id, String cate, int seq) throws SQLException; -->
 	<select id="view" resultType="org.pro.pulmuone.domain.inquiry.InquiryDTO">
 		SELECT *
 		FROM inquiry

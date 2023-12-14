@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pro.pulmuone.mapper.modal.ModalMapper">
+<!--    모달창 -->
+   <select id="modalview" resultType="org.pro.pulmuone.domain.product.ProductsDTO">
+      SELECT products_tag,  products_name, img_no, system_name, price, products_size, products_sub_name 
+      FROM  products_img pi JOIN products p ON p.products_no = pi.products_no 
+      WHERE products_tag = #{products_tag}  
+      AND 
+      origin_name like 'View%'  
+      ORDER BY img_no asc
+   </select>
+</mapper>

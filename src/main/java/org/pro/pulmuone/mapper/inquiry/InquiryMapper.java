@@ -10,11 +10,14 @@ public interface InquiryMapper {
 	int write (InquiryDTO dto) throws SQLException;
 
 	// 문의 목록
-	ArrayList<InquiryDTO> select (String user_id, String category) throws SQLException;
+	ArrayList<InquiryDTO> select (String user_id, String cate, int pageNo, int numberPerPage) throws SQLException;
 
 	// 문의 갯수 
 	int selectCount ( String user_id, String category) throws SQLException;
 
+	// 총 페이지 수 
+	int getTotalPages(String userId, String category, int numberPerPage) throws SQLException;
+	
 	// 문의 상세보기
 	InquiryDTO view (String user_id, String category, int seq) throws SQLException;
 

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!-- 		<div class="breadcrumb-style"> -->
 <!-- 			<div class="container"> -->
@@ -15,7 +16,7 @@
 
 <div class="container">
 	<h2 class="container-title light">
-		<b>${ auth.getName() }</b>님 안녕하세요
+		<b><sec:authentication property="principal.member.name"/></b>님 안녕하세요
 	</h2>
 	
 	<ul class="stat-wrapper">

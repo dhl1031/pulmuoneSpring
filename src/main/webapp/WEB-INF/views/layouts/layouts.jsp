@@ -15,6 +15,7 @@
   	<tiles:insertAttribute name="main" />
   	<!-- footer -->
   	<tiles:insertAttribute name="footer" />
+  	<tiles:insertAttribute name="footermodal" />
 </div>
 
 </body>

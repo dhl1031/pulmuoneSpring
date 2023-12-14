@@ -18,6 +18,7 @@
 		<result property="adApproval" column="ad_approval" />
 		<result property="marketingApproval" column="marketing_approval" />
 		<result property="regDate" column="reg_date" />
+		<result property="pwdReset" column="pwd_reset" />
 		<collection property="authList" resultMap="authMap"></collection>
 	</resultMap>
 	<resultMap type="org.pro.pulmuone.domain.auth.AuthVO" id="authMap"> 
@@ -26,20 +27,20 @@
 	</resultMap>
 
 
-	<select id="selectMemberForNICE" resultType="int">
-		SELECT COUNT(*)
+	<select id="selectMemberForNICE" resultMap="memberMap">
+		SELECT member_no, member_id, name, tel, email, birthdate, reg_date
 		FROM member
-		WHERE name = #{param1} AND tel = #{param2}  AND birthDate = #{param3}
+		WHERE name = #{name} AND tel = #{tel}  AND birthDate = #{birthDate}
 	</select>
 
-	<!-- public MemberVO getMember(String id) throws ClassNotFoundException, SQLException; -->
+	<!-- public MemberVO getMember(String memberId) throws ClassNotFoundException, SQLException; -->
 	 <select id="selectMemberForDuplicateIdCheck" resultType="int">
 		SELECT COUNT(*)
 		FROM MEMBER
-		WHERE member_id = #{param1}
+		WHERE member_id = #{memberId}
 	 </select>
 
-	<select id="selectMemberWithInvCode" resultType="org.pro.pulmuone.domain.member.MemberDTO" resultMap="memberMap">
+	<select id="selectMemberWithInvCode" resultMap="memberMap">
 		SELECT member_no, member_id, name
 		FROM member
 		WHERE inv_code = #{invCode}
@@ -48,14 +49,29 @@
 
 	<!-- public int insert(MemberVO member) throws ClassNotFoundException, SQLException; -->
 	<insert id="insert">
-		INSERT INTO member(member_id, pwd, name, tel, email, birthdate, inv_code, reg_date)
-		VALUES( #{id}, #{pwd}, #{name}, #{gender}, #{birth}, #{is_lunar}, #{cphone}, #{email}, #{habit}, SYSDATE)
+		INSERT INTO member(member_no, member_id, pwd, name, tel, email, birthdate, inv_code, reg_date)
+		VALUES( SEQ_MEMBER.NEXTVAL, #{memberId}, #{pwd}, #{name}, #{tel}, #{email}, #{birthDate}, #{invCode}, SYSDATE)
 		<!-- MemberVO 객체의 필드값을 그대로 가져와서 사용. 단, 필드명과 일치해야 함 -->
 	</insert>
 	
 	
+	<insert id="insertAuthForSignUp">
+		INSERT INTO member_authorities(member_id)
+		VALUES( #{memberId} )
+	</insert>
 	
 	
+	<update id="updatePwd">
+		UPDATE member
+		SET pwd = #{newPassword}, pwd_reset = #{pwdReset}
+		WHERE member_id = #{memberId}
+	</update>
+	
+	<select id="selectMemberForGetPwd" resultType="String">
+		SELECT pwd
+		FROM member
+		WHERE member_id = #{memberId}
+	</select>
 	
 	
 
@@ -64,7 +80,7 @@
 	<!-- 로그인 인증 처리 -->
 	<!-- 	public MemberVO read(String userid); -->
 	<select id="read" resultMap="memberMap">
-	 SELECT member_no, m.member_id, pwd, name, authority
+	 SELECT member_no, m.member_id, pwd, name, authority, pwd_reset
 	 FROM member m LEFT JOIN member_authorities auth ON m.member_id = auth.member_id
 	 WHERE m.member_id = #{userid}
 	</select>

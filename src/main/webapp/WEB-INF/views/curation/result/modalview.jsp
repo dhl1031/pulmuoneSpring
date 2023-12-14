@@ -3,8 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-
-<%-- <c:forEach var="list2" items="${list2 }" begin="0" end="0"> --%>
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal"
 		aria-label="Close"></button>
@@ -30,4 +28,5 @@
 		<a href="/product/daily/${list2[0].products_tag}?eventIdx=" class="button-basic primary">상세보기</a>
 	</div>
 </div>
-<%-- </c:forEach> --%>
+
+

@@ -16,13 +16,12 @@ public class DailyItemInfoDTO {
 	private String products_name;
 	private List<Integer> products_cnt;
 	// private String products_type;
-	private String products_size;
+	// private String products_size;
 	private int price;
 	private int event_price;
 	private String img_path;
 	private String system_name;
 	// private String tracking_no;
 	// private String products_tag;
-	private int total_count;
 	
 }
