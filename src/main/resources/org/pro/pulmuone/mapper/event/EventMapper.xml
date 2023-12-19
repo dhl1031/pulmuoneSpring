@@ -1,0 +1,128 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.pro.pulmuone.mapper.event.EventMapper">
+
+	<resultMap id="EventListResultMap"
+		type="org.pro.pulmuone.domain.event.EventListVO">
+		<id property="event_no" column="event_no" />
+		<result property="event_name" column="event_name" />
+		<result property="event_start" column="event_start" />
+		<result property="event_end" column="event_end" />
+		<result property="event_notice" column="event_notice" />
+		<association property="thumbnail"
+			javaType="org.pro.pulmuone.domain.event.EventThumbnailVO">
+			<id property="img_no" column="img_no" />
+			<result property="system_name" column="system_name" />
+			<result property="origin_name" column="origin_name" />
+			<result property="img_size" column="img_size" />
+			<result property="img_type" column="img_type" />
+			<result property="img_path" column="img_path" />
+		</association>
+	</resultMap>
+
+	<select id="eventList" resultMap="EventListResultMap">
+	<![CDATA[
+	    SELECT * 
+	    FROM (
+	        SELECT ROWNUM no, t.*
+	        FROM (
+	            SELECT e.event_no, e.event_name, e.event_start, e.event_end, e.event_notice, 
+	                   et.img_no, et.system_name, et.origin_name, et.img_size, et.img_type, et.img_path 
+	            FROM event e 
+	            LEFT JOIN event_thumbnail et ON e.event_no = et.event_no 
+	            WHERE e.event_end >= SYSDATE 
+	            ORDER BY e.event_no DESC
+	        ) t
+	    )
+	    WHERE no BETWEEN #{start} AND #{numberPerPage}
+	]]>
+	</select>
+	
+	<select id="endedEventList" resultMap="EventListResultMap">
+	<![CDATA[
+	    SELECT * 
+	    FROM (
+	        SELECT ROWNUM no, t.*
+	        FROM (
+	            SELECT e.event_no, e.event_name, e.event_start, e.event_end, e.event_notice, 
+	                   et.img_no, et.system_name, et.origin_name, et.img_size, et.img_type, et.img_path 
+	            FROM event e 
+	            LEFT JOIN event_thumbnail et ON e.event_no = et.event_no 
+	            WHERE e.event_end < SYSDATE 
+	            ORDER BY e.event_end DESC, e.event_no DESC 
+	        ) t
+	    )
+	    WHERE no BETWEEN #{start} AND #{numberPerPage}
+	]]>
+	</select>
+
+	<select id="getTotalRecords" resultType="int">
+		SELECT COUNT(*) FROM event
+	</select>
+
+	<select id="getTotalPages" resultType="int">
+		<choose>
+			<when test="BEvent">
+				SELECT CEIL(COUNT(*)/#{numberPerPage})
+				FROM event
+				WHERE event_end >= SYSDATE
+			</when>
+			<otherwise>
+            <![CDATA[
+                SELECT CEIL(COUNT(*)/#{numberPerPage})
+                FROM event
+                WHERE event_end < SYSDATE
+            ]]>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<resultMap id="EventViewResultMap" type="org.pro.pulmuone.domain.event.EventViewVO">
+	    <id property="event_no" column="event_no"/>
+	    <result property="event_name" column="event_name"/>
+	    <result property="event_start" column="event_start"/>
+	    <result property="event_end" column="event_end"/>
+	    <result property="event_notice" column="event_notice"/>
+	    <result property="event_cmt" column="event_cmt"/>
+	    <collection property="images" ofType="org.pro.pulmuone.domain.event.EventImageVO">
+	        <id property="img_no" column="img_no"/>
+	        <result property="system_name" column="system_name"/>
+	        <result property="origin_name" column="origin_name"/>
+	        <result property="img_size" column="img_size"/>
+	        <result property="img_type" column="img_type"/>
+	        <result property="img_path" column="img_path"/>
+	        <result property="img_link" column="img_link"/>
+	    </collection>
+	</resultMap>
+	
+	<select id="viewEvent" resultMap="EventViewResultMap">
+	    SELECT e.event_no, e.event_name, e.event_start, e.event_end, e.event_notice, e.event_cmt, 
+	           i.img_no, i.system_name, i.origin_name, i.img_size, i.img_type, i.img_path, i.img_link 
+	    FROM event e 
+	    LEFT JOIN event_image i ON e.event_no = i.event_no 
+	    WHERE e.event_no = #{event_no}
+	</select>
+	
+	<select id="getComments" resultType="org.pro.pulmuone.domain.event.EventCommentVO">
+        SELECT comment_no, event_no, member_no, write_date, content, name
+        FROM (
+            SELECT rownum rnum, c.comment_no, c.event_no, c.member_no, c.write_date, c.content, m.name
+            FROM (
+                SELECT * FROM event_comment WHERE event_no = #{event_no} ORDER BY comment_no DESC
+            ) c
+            INNER JOIN member m ON c.member_no = m.member_no
+        )
+        WHERE rnum BETWEEN #{start} AND #{end}
+    </select>
+    
+    <select id="getCommentCount" resultType="int">
+	    SELECT COUNT(*) FROM event_comment
+	    WHERE event_no = #{event_no}
+	</select>
+	
+    <insert id="insertComment" parameterType="org.pro.pulmuone.domain.event.EventCommentVO">
+        INSERT INTO event_comment (event_no, member_no, content)
+        VALUES (#{event_no}, #{member_no}, #{content})
+    </insert>
+
+</mapper>
