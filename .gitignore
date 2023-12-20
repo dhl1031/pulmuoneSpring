@@ -62,6 +62,6 @@ buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
-src/main/webapp/META-INF/*
+src/main/webapp/META-INF/maven/*
 
 src/main/webapp/resources/assets/js/order/apiKey.js
