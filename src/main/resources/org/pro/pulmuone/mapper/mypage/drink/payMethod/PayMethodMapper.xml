@@ -19,7 +19,7 @@
 		<result property="payInfoNo" column="pay_info_no"></result>
 		<result property="cardNum" column="card_num"></result>
 		<result property="expiryDate" column="expiry_date"></result>
-		<result property="cardBirthDate" column="birth_date"></result>
+		<result property="BirthDate" column="birth_date"></result>
 		<result property="acntHolder" column="acnt_holder"></result>
 		<result property="bankNo" column="bank_no"></result>
 		<result property="acntNum" column="acnt_num"></result>
@@ -69,7 +69,7 @@
 		<choose>
 			<when test="dto.drkPayMethod == 0">
 				card_info
-				VALUES ( seq_card_info.NEXTVAL, #{dto.memberNo}, #{dto.cardNum}, #{dto.expiryDate}, #{dto.cardBirthDate}, #{dto.drkOrderNo} )
+				VALUES ( seq_card_info.NEXTVAL, #{dto.memberNo}, #{dto.cardNum}, #{dto.expiryDate}, TO_DATE( #{dto.cardBirthDate}, 'RRMMDD'), #{dto.drkOrderNo} )
 
 			</when>
 			<when test="dto.drkPayMethod == 1">

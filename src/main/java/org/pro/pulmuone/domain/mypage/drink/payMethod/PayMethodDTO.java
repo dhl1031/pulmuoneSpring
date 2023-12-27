@@ -26,7 +26,8 @@ public class PayMethodDTO {
 	// card
 	private String cardNum;
 	private String expiryDate;
-	private Date cardBirthDate;
+	private Date BirthDate;
+	private String cardBirthDate;
 	
 	// bank
 	private String acntHolder;
